@@ -36,9 +36,10 @@ import business.facade.Store;
 import business.tests.AutomatedTester;
 
 /**
- * This class implements the user interface for the Library project. The
- * commands are encoded as integers using a number of static final variables. A
- * number of utility methods exist to make it easier to parse the input.
+ * TEST MAKING A CHANGE AND COMMITING This class implements the user interface
+ * for the Store project. The commands are encoded as integers using a number of
+ * static final variables. A number of utility methods exist to make it easier
+ * to parse the input.
  */
 public class UserInterface {
 	private static UserInterface userInterface;
