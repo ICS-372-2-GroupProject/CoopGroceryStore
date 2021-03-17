@@ -26,7 +26,7 @@ import java.util.GregorianCalendar;
 /**
  * Represents a single Transaction (issue, renew, etc.)
  * 
- * @author Brahma Dathan
+ * @author Nalongsone Danddank
  *
  */
 public class Transaction implements Serializable {
@@ -36,13 +36,11 @@ public class Transaction implements Serializable {
 	private Calendar date;
 
 	/**
-	 * Creates the transaction with a given type and book title. The date is the
+	 * Creates the transaction with a given type and Product title. The date is the
 	 * current date.
 	 * 
-	 * @param type
-	 *            The type of transaction
-	 * @param title
-	 *            The title of the book
+	 * @param type  The type of transaction
+	 * @param title The title of the Product
 	 * 
 	 */
 	public Transaction(String type, String title) {
@@ -54,8 +52,7 @@ public class Transaction implements Serializable {
 	/**
 	 * Checks whether this transaction is on the given date
 	 * 
-	 * @param date
-	 *            The date for which transactions are being sought
+	 * @param date The date for which transactions are being sought
 	 * @return true iff the dates match
 	 */
 	public boolean onDate(Calendar date) {
