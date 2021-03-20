@@ -33,6 +33,8 @@ import business.entities.Member;
 import business.entities.Order;
 import business.entities.Product;
 import business.entities.Transaction;
+import business.entities.iterators.FilteredIterator;
+import business.entities.iterators.FilteredOrderIterator;
 import business.entities.iterators.SafeIterator;
 
 /**
@@ -218,6 +220,10 @@ public class Store implements Serializable {
 		public boolean insertOrder(Order order) {
 			orders.add(order);
 			return true;
+		}
+
+		public Iterator<Order> getOutstandingOrders() {
+			return new FilteredOrderIterator(orders.iterator(), order -> order.isOutstanding());
 		}
 
 		/**
@@ -435,6 +441,11 @@ public class Store implements Serializable {
 			ioe.printStackTrace();
 			return false;
 		}
+	}
+
+	public Iterator<Order> getOutstandingOrders() {
+		Iterator<Order> iterator = orders.getOutstandingOrders();
+		return iterator;
 	}
 
 	/**

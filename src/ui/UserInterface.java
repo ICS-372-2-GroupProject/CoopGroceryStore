@@ -30,6 +30,7 @@ import java.util.Iterator;
 import java.util.StringTokenizer;
 
 import business.entities.Transaction;
+import business.entities.Order;
 import business.facade.Request;
 import business.facade.Result;
 import business.facade.Store;
@@ -55,7 +56,7 @@ public class UserInterface {
 	private static final int name7 = 7;
 	private static final int name8 = 8;
 	private static final int name9 = 9;
-	private static final int name10 = 10;
+	private static final int GET_OUTSTANDING_ORDERS = 10;
 	private static final int GET_MEMBERS = 11;
 	private static final int GET_PRODUCT = 12;
 	private static final int SAVE = 13;
@@ -221,9 +222,9 @@ public class UserInterface {
 		System.out.println(name7 + " ???");
 		System.out.println(name8 + " ???");
 		System.out.println(name9 + " ???");
-		System.out.println(name10 + " ???");
-		System.out.println(GET_MEMBERS + " to  print all members");
-		System.out.println(GET_PRODUCT + " to  print all product");
+		System.out.println(GET_OUTSTANDING_ORDERS + " to print all outstanding orders");
+		System.out.println(GET_MEMBERS + " to print all members");
+		System.out.println(GET_PRODUCT + " to print all product");
 		System.out.println(SAVE + " to  save data");
 		System.out.println(HELP + " for help");
 	}
@@ -299,6 +300,19 @@ public class UserInterface {
 			System.out.println(transaction.getType() + "   " + transaction.getTitle() + "\n");
 		}
 		System.out.println("\n End of transactions \n");
+	}
+
+	/**
+	 * Method to be called for displaying outstanding orders.
+	 */
+	public void getOutstandingOrders() {
+		Iterator<Order> result = store.getOutstandingOrders();
+		while (result.hasNext()) {
+			Order order = (Order) result.next();
+			System.out.println(order.getId() + ", " + order.getProductOrdered().getName() + ", "
+					+ order.getDateOrdered() + ", " + order.getQtyOrdered());
+		}
+		System.out.println("\nEnd of Transactions\n");
 	}
 
 	/**
@@ -412,7 +426,8 @@ public class UserInterface {
 				break;
 			case name9:
 				break;
-			case name10:
+			case GET_OUTSTANDING_ORDERS:
+				getOutstandingOrders();
 				break;
 			case GET_MEMBERS:
 				getMembers();
