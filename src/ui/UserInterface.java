@@ -256,10 +256,21 @@ public class UserInterface {
 		Request.instance().setProductId(getToken("Enter Product id"));
 		Request.instance().setProductCurrentPrice(getName("Enter Product Current Price"));
 		Result result = store.addProduct(Request.instance());
-		if (result.getResultCode() != Result.OPERATION_COMPLETED) {
-			System.out.println("Product could not be added");
-		} else {
-			System.out.println("Product " + result.getProductName() + " added");
+		switch (result.getResultCode()) {
+			case Result.PRODUCT_EXISTS :
+				System.out.println("Product with name "
+						+ Request.instance().getProductName()
+						+ " already exists");
+				break;
+			case Result.OPERATION_FAILED :
+				System.out.println("Product failed to be added");
+				break;
+			case Result.OPERATION_COMPLETED :
+				System.out.println(
+						"Product " + result.getProductName() + " added");
+				break;
+			default :
+				System.out.println("An error has occurred");
 		}
 	}
 
