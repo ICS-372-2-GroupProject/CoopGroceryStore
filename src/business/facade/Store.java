@@ -61,7 +61,12 @@ public class Store implements Serializable {
 	 */
 
 	/**
+<<<<<<< HEAD
 	 * The collection class for Book objects
+=======
+	 * The collection class for Product objects
+	 * 
+>>>>>>> branch 'main' of https://github.com/ICS-372-2-GroupProject/CoopGroceryStore.git
 	 * @author Brahma Dathan and Sarnath Ramnath
 	 */
 	private class ProductList implements Iterable<Product>, Serializable {
