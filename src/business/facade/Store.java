@@ -62,7 +62,7 @@ public class Store implements Serializable {
 	 */
 
 	/**
-	 * The collection class for Book objects
+	 * The collection class for Product objects
 	 * 
 	 * @author Brahma Dathan and Sarnath Ramnath
 	 */
