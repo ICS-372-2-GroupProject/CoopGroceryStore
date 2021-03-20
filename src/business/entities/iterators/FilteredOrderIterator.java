@@ -7,7 +7,7 @@ import java.util.function.Predicate;
 import business.entities.Order;
 
 /**
- * This class implements the Iterator interface to iterate only on items that
+ * This class implements the Iterator interface to iterate only on Orders that
  * satisfy a certain predicate.
  * 
  * @author Brahma Dathan
