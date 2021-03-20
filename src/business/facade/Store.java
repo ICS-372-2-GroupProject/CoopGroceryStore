@@ -347,7 +347,7 @@ public class Store implements Serializable {
 			return result;
 		}
 		result.setOrderFields(order);
-		Request.instance().setProductId(order.getId());
+		Request.instance().setProductId(order.getProductOrdered().getId());
 		Product product = products.search(request.getProductId());
 		if (product == null) {
 			result.setResultCode(Result.PRODUCT_NOT_FOUND);
