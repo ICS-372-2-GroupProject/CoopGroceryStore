@@ -5,7 +5,6 @@ package business.facade;
  * business logic to user interface. At present, the Result object returns an
  * int code,plus values of selected fields of Book and Member. They are the book
  * title, id, borrower id, due date, member name, member phone, and member id.
- * 
  * @author Brahma Dathan
  */
 public class Result extends DataTransfer {
@@ -15,6 +14,7 @@ public class Result extends DataTransfer {
 	public static final int OPERATION_COMPLETED = 4;
 	public static final int OPERATION_FAILED = 5;
 	public static final int NO_SUCH_MEMBER = 6;
+	public static final int PRODUCT_EXISTS = 7;
 
 	private int resultCode;
 

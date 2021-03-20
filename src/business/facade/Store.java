@@ -70,14 +70,14 @@ public class Store implements Serializable {
 
 		/**
 		 * Checks whether a product with a given product id exists.
-		 * @param productId the id of the product
+		 * @param productName the name of the product
 		 * @return true if the product exists
 		 */
-		public Product search(String productId) {
+		public Product search(String productName) {
 			for (Iterator<Product> iterator = products.iterator(); iterator
 					.hasNext();) {
 				Product product = (Product) iterator.next();
-				if (product.getId().equals(productId)) {
+				if (product.getName().equals(productName)) {
 					return product;
 				}
 			}
@@ -254,7 +254,11 @@ public class Store implements Serializable {
 		Product product = new Product(request.getProductName(),
 				request.getProductId(), request.getProductCurrentPrice(),
 				request.getProductReorderLevel());
-
+		Product checkExists = products.search(request.getProductName());
+		if (checkExists != null) {
+			result.setResultCode(Result.PRODUCT_EXISTS);
+			return result;
+		}
 		if (products.insertProduct(product)) {
 			result.setResultCode(Result.OPERATION_COMPLETED);
 			result.setProductFields(product);
