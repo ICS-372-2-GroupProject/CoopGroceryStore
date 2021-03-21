@@ -29,8 +29,8 @@ import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.StringTokenizer;
 
-import business.entities.Transaction;
 import business.entities.Order;
+import business.entities.Transaction;
 import business.facade.Request;
 import business.facade.Result;
 import business.facade.Store;
@@ -44,7 +44,8 @@ import business.tests.AutomatedTester;
  */
 public class UserInterface {
 	private static UserInterface userInterface;
-	private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+	private BufferedReader reader = new BufferedReader(
+			new InputStreamReader(System.in));
 	private static Store store;
 	private static final int EXIT = 0;
 	private static final int ENROLL_MEMBER = 1;
@@ -63,15 +64,16 @@ public class UserInterface {
 	private static final int HELP = 14;
 
 	/**
-	 * Made private for singleton pattern. Conditionally looks for any saved data.
-	 * Otherwise, it gets a singleton Store object.
+	 * Made private for singleton pattern. Conditionally looks for any saved
+	 * data. Otherwise, it gets a singleton Store object.
 	 */
 	private UserInterface() {
 		if (yesOrNo("Look for saved data and  use it?")) {
 			retrieve();
 		} else {
 			store = store.instance();
-			if (yesOrNo("Do you want to generate a test bed and invoke the functionality using asserts? ")) {
+			if (yesOrNo(
+					"Do you want to generate a test bed and invoke the functionality using asserts? ")) {
 				new AutomatedTester().testAll();
 			}
 
@@ -180,7 +182,8 @@ public class UserInterface {
 			try {
 				Calendar date = new GregorianCalendar();
 				String item = getToken(prompt);
-				DateFormat dateFormat = SimpleDateFormat.getDateInstance(DateFormat.SHORT);
+				DateFormat dateFormat = SimpleDateFormat
+						.getDateInstance(DateFormat.SHORT);
 				date.setTime(dateFormat.parse(item));
 				return date;
 			} catch (Exception fe) {
@@ -197,7 +200,8 @@ public class UserInterface {
 	public int getCommand() {
 		do {
 			try {
-				int value = Integer.parseInt(getToken("Enter command:" + HELP + " for help"));
+				int value = Integer.parseInt(
+						getToken("Enter command:" + HELP + " for help"));
 				if (value >= EXIT && value <= HELP) {
 					return value;
 				}
@@ -211,7 +215,8 @@ public class UserInterface {
 	 * Displays the help screen
 	 */
 	public void help() {
-		System.out.println("Enter a number between 0 and ???? as explained below:");
+		System.out.println(
+				"Enter a number between 0 and ???? as explained below:");
 		System.out.println("\n" + EXIT + " to Exit");
 		System.out.println(ENROLL_MEMBER + " to enroll a member");
 		System.out.println(REMOVE_MEMBER + " to remove a member");
@@ -222,7 +227,8 @@ public class UserInterface {
 		System.out.println(name7 + " ???");
 		System.out.println(name8 + " ???");
 		System.out.println(name9 + " ???");
-		System.out.println(GET_OUTSTANDING_ORDERS + " to print all outstanding orders");
+		System.out.println(
+				GET_OUTSTANDING_ORDERS + " to print all outstanding orders");
 		System.out.println(GET_MEMBERS + " to print all members");
 		System.out.println(GET_PRODUCT + " to print all product");
 		System.out.println(SAVE + " to  save data");
@@ -242,19 +248,25 @@ public class UserInterface {
 		if (result.getResultCode() != Result.OPERATION_COMPLETED) {
 			System.out.println("Could not add member");
 		} else {
-			System.out.println(result.getMemberName() + "'s id is " + result.getMemberId());
+			System.out.println(result.getMemberName() + "'s id is "
+					+ result.getMemberId());
 		}
 	}
 
 	/**
 	 * code updated by Richard Fritz Method to be called for adding a product.
-	 * Prompts the user for the appropriate values and uses the appropriate Store
-	 * method for adding the product.
+	 * Prompts the user for the appropriate values and uses the appropriate
+	 * Store method for adding the product.
 	 */
 	public void addProduct() {
 		Request.instance().setProductName(getName("Enter  Product Name"));
 		Request.instance().setProductId(getToken("Enter Product id"));
-		Request.instance().setProductCurrentPrice(getName("Enter Product Current Price"));
+		Request.instance()
+				.setProductStockOnHand(getNumber("Enter Stock on Hand"));
+		Request.instance()
+				.setProductCurrentPrice(getName("Enter Current Price"));
+		Request.instance()
+				.setProductReorderLevel(getNumber("Enter Reorder Level"));
 		Result result = store.addProduct(Request.instance());
 		switch (result.getResultCode()) {
 			case Result.PRODUCT_EXISTS :
@@ -283,17 +295,18 @@ public class UserInterface {
 		Request.instance().setMemberId(getToken("Enter member id"));
 		Result result = store.removeMember(Request.instance());
 		switch (result.getResultCode()) {
-		case Result.NO_SUCH_MEMBER:
-			System.out.println("No such member with id " + Request.instance().getMemberId() + " in member list");
-			break;
-		case Result.OPERATION_FAILED:
-			System.out.println("Member could not be removed");
-			break;
-		case Result.OPERATION_COMPLETED:
-			System.out.println(" Member has been removed");
-			break;
-		default:
-			System.out.println("An error has occurred");
+			case Result.NO_SUCH_MEMBER :
+				System.out.println("No such member with id "
+						+ Request.instance().getMemberId() + " in member list");
+				break;
+			case Result.OPERATION_FAILED :
+				System.out.println("Member could not be removed");
+				break;
+			case Result.OPERATION_COMPLETED :
+				System.out.println(" Member has been removed");
+				break;
+			default :
+				System.out.println("An error has occurred");
 		}
 	}
 
@@ -304,11 +317,14 @@ public class UserInterface {
 	 */
 	public void getTransactions() {
 		Request.instance().setMemberId(getToken("Enter member id"));
-		Request.instance().setDate(getDate("Please enter the date for which you want records as mm/dd/yy"));
-		Iterator<Transaction> result = store.getTransactions(Request.instance());
+		Request.instance().setDate(getDate(
+				"Please enter the date for which you want records as mm/dd/yy"));
+		Iterator<Transaction> result = store
+				.getTransactions(Request.instance());
 		while (result.hasNext()) {
 			Transaction transaction = (Transaction) result.next();
-			System.out.println(transaction.getType() + "   " + transaction.getTitle() + "\n");
+			System.out.println(transaction.getType() + "   "
+					+ transaction.getTitle() + "\n");
 		}
 		System.out.println("\n End of transactions \n");
 	}
@@ -320,7 +336,8 @@ public class UserInterface {
 		Iterator<Order> result = store.getOutstandingOrders();
 		while (result.hasNext()) {
 			Order order = (Order) result.next();
-			System.out.println(order.getId() + ", " + order.getProductOrdered().getName() + ", "
+			System.out.println(order.getId() + ", "
+					+ order.getProductOrdered().getName() + ", "
 					+ order.getDateOrdered() + ", " + order.getQtyOrdered());
 		}
 		System.out.println("\nEnd of Transactions\n");
@@ -331,11 +348,14 @@ public class UserInterface {
 	 */
 	public void getMembers() {
 		Iterator<Result> iterator = store.getMembers();
-		System.out.println("List of members (Member Name, address, phone, date joined, fee paid, Member Id)");
+		System.out.println(
+				"List of members (Member Name, address, phone, date joined, fee paid, Member Id)");
 		while (iterator.hasNext()) {
 			Result result = iterator.next();
-			System.out.println(result.getMemberName() + " " + result.getMemberAddress() + " " + result.getMemberPhone()
-					+ " " + result.getMemberDateJoined() + " " + result.getMemberFee() + " " + result.getMemberId());
+			System.out.println(result.getMemberName() + " "
+					+ result.getMemberAddress() + " " + result.getMemberPhone()
+					+ " " + result.getMemberDateJoined() + " "
+					+ result.getMemberFee() + " " + result.getMemberId());
 		}
 		System.out.println("End of listing");
 	}
@@ -345,11 +365,14 @@ public class UserInterface {
 	 */
 	public void getProduct() {
 		Iterator<Result> iterator = store.getProduct();
-		System.out.println("List of product (Product Name, Stock on Hand, Current Price, Reorder Level, Product Id)");
+		System.out.println(
+				"List of product (Product Name, Stock on Hand, Current Price, Reorder Level, Product Id)");
 		while (iterator.hasNext()) {
 			Result result = iterator.next();
-			System.out.println(result.getProductName() + " " + result.getProductStockOnHand() + " "
-					+ result.getProductCurrentPrice() + " " + result.getProductReorderLevel() + " "
+			System.out.println(result.getProductName() + " "
+					+ result.getProductStockOnHand() + " "
+					+ result.getProductCurrentPrice() + " "
+					+ result.getProductReorderLevel() + " "
 					+ result.getProductId());
 		}
 		System.out.println("End of listing");
@@ -363,8 +386,10 @@ public class UserInterface {
 			Request.instance().setOrderId(getToken("Enter Order ID"));
 			Result result = store.processShipment(Request.instance());
 			if (result.getResultCode() == Result.OPERATION_COMPLETED) {
-				System.out.println(result.getProductName() + "(Product ID: " + result.getProductId() + ") updated!");
-				System.out.println("New quantity in stock: " + result.getProductStockOnHand());
+				System.out.println(result.getProductName() + "(Product ID: "
+						+ result.getProductId() + ") updated!");
+				System.out.println("New quantity in stock: "
+						+ result.getProductStockOnHand());
 			} else {
 				System.out.println("Could not process shipment");
 			}
@@ -380,7 +405,8 @@ public class UserInterface {
 	 */
 	private void save() {
 		if (store.save()) {
-			System.out.println(" The library has been successfully saved in the file LibraryData \n");
+			System.out.println(
+					" The library has been successfully saved in the file LibraryData \n");
 		} else {
 			System.out.println(" There has been an error in saving \n");
 		}
@@ -395,7 +421,8 @@ public class UserInterface {
 			if (store == null) {
 				store = Store.retrieve();
 				if (store != null) {
-					System.out.println(" The Store has been successfully retrieved from the file StoreData \n");
+					System.out.println(
+							" The Store has been successfully retrieved from the file StoreData \n");
 				} else {
 					System.out.println("File doesnt exist; creating new Store");
 					store = Store.instance();
@@ -415,43 +442,43 @@ public class UserInterface {
 		help();
 		while ((command = getCommand()) != EXIT) {
 			switch (command) {
-			case ENROLL_MEMBER:
-				enrollMember();
-				break;
-			case REMOVE_MEMBER:
-				removeMember();
-				break;
-			case ADD_PRODUCT:
-				addProduct();
-				break;
-			case name4:
-				break;
-			case PROCESS_SHIPMENT:
-				processShipment();
-				break;
-			case name6:
-				break;
-			case name7:
-				break;
-			case name8:
-				break;
-			case name9:
-				break;
-			case GET_OUTSTANDING_ORDERS:
-				getOutstandingOrders();
-				break;
-			case GET_MEMBERS:
-				getMembers();
-				break;
-			case GET_PRODUCT:
-				getProduct();
-				break;
-			case SAVE:
-				save();
-				break;
-			case HELP:
-				help();
-				break;
+				case ENROLL_MEMBER :
+					enrollMember();
+					break;
+				case REMOVE_MEMBER :
+					removeMember();
+					break;
+				case ADD_PRODUCT :
+					addProduct();
+					break;
+				case name4 :
+					break;
+				case PROCESS_SHIPMENT :
+					processShipment();
+					break;
+				case name6 :
+					break;
+				case name7 :
+					break;
+				case name8 :
+					break;
+				case name9 :
+					break;
+				case GET_OUTSTANDING_ORDERS :
+					getOutstandingOrders();
+					break;
+				case GET_MEMBERS :
+					getMembers();
+					break;
+				case GET_PRODUCT :
+					getProduct();
+					break;
+				case SAVE :
+					save();
+					break;
+				case HELP :
+					help();
+					break;
 			}
 		}
 	}
