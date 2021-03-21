@@ -117,22 +117,6 @@ public class Store implements Serializable {
         }
 
         /**
-         * Modified from instructional code.
-         * 
-         * @author G.D. Ponsness
-         * @param product
-         * @return
-         */
-        public boolean changePrice(String productId) {
-            Product product = search(productId);
-            if (product == null) {
-                return false;
-            } else {
-                return products.remove(product);
-            }
-        }
-
-        /**
          * Returns an iterator to all products
          * 
          * @return iterator to the collection
