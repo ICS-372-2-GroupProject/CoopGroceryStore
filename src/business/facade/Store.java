@@ -258,7 +258,7 @@ public class Store implements Serializable {
 	public Result addProduct(Request request) {
 		Result result = new Result();
 		Product product = new Product(request.getProductName(),
-				request.getProductId(), request.getProductCurrentPrice(),
+				request.getProductId(), request.getProductStockOnHand(), request.getProductCurrentPrice(),
 				request.getProductReorderLevel());
 		Product checkExists = products.search(request.getProductName());
 		if (checkExists != null) {

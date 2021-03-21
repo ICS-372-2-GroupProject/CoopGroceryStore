@@ -26,9 +26,10 @@ public class Product implements Serializable {
 	 * @param reorderLevel
 	 *            product reorderLevel
 	 */
-	public Product(String name, String id, String currentPrice, int reorderLevel) {
+	public Product(String name, String id, int stockInHand, String currentPrice, int reorderLevel) {
 		this.name = name;
 		this.id = id;
+		this.stockOnHand = stockInHand;
 		this.currentPrice = currentPrice;
 		this.reorderLevel = reorderLevel;
 	}
