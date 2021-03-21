@@ -67,7 +67,7 @@ public class AutomatedTester {
 			Request.instance().setProductName(productName[count]);
 			Request.instance().setProductId(productId[count]);
 			Request.instance().setProductStockOnHand(stockOnHand[count]);
-			Request.instance().setProductCurrentPrice(currentPrice[count]);
+			Request.instance().setProductPrice(currentPrice[count]);
 			Request.instance().setProductReorderLevel(reorderLevel[count]);
 			Result result = Store.instance().addProduct(Request.instance());
 			assert result.getResultCode() == Result.OPERATION_COMPLETED;

@@ -1,121 +1,132 @@
 package business.entities;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 /**
  * product represents a product of the Store.
  */
 public class Product implements Serializable {
-	private static final long serialVersionUID = 1L;
-	private String name;
-	private String id;
-	private int stockOnHand;
-	private String currentPrice;
-	private int reorderLevel;
+    private static final long serialVersionUID = 1L;
+    private String name;
+    private String id;
+    private String price;
+    private int reorderLevel;
+    private int stockOnHand;
 
-	/**
-	 * Creates a product with the name, given id, current price, and reorder level
-	 * 
-	 * @param name
-	 *            product name
-	 * @param id
-	 *            product id
-	 * @param currentPrice
-	 *            product currentPrice
-	 * @param reorderLevel
-	 *            product reorderLevel
-	 */
-	public Product(String name, String id, int stockInHand, String currentPrice, int reorderLevel) {
-		this.name = name;
-		this.id = id;
-		this.stockOnHand = stockInHand;
-		this.currentPrice = currentPrice;
-		this.reorderLevel = reorderLevel;
-	}
+    /**
+     * Creates a product with the name, given id, current price, reorder level,
+     * and stock on hand.
+     * 
+     * @param name         product name
+     * @param id           product id
+     * @param price        product currentPrice
+     * @param reorderLevel product reorderLevel
+     * @param stockInHand  product stockOnHand
+     */
+    public Product(String name, String id, String price, int reorderLevel,
+            int stockInHand) {
+        this.name = name;
+        this.id = id;
+        this.stockOnHand = stockInHand;
+        this.price = price;
+        this.reorderLevel = reorderLevel;
+    }
 
-	/**
-	 * @return the stockOnHand
-	 */
-	public int getStockOnHand() {
-		return stockOnHand;
-	}
+    /**
+     * @return the name
+     */
+    public String getName() {
+        return name;
+    }
 
-	/**
-	 * @param stockOnHand
-	 *            the stockOnHand to set
-	 */
-	public void setStockOnHand(int stockOnHand) {
-		this.stockOnHand = stockOnHand;
-	}
+    /**
+     * @return the id
+     */
+    public String getId() {
+        return id;
+    }
 
-	/**
-	 * @return the currentPrice
-	 */
-	public String getCurrentPrice() {
-		return currentPrice;
-	}
+    /**
+     * @return the price
+     */
+    public String getPrice() {
+        return price;
+    }
 
-	/**
-	 * @param currentPrice
-	 *            the currentPrice to set
-	 */
-	public void setCurrentPrice(String currentPrice) {
-		this.currentPrice = currentPrice;
-	}
+    /**
+     * @param price the price to set
+     */
+    public void setPrice(String price) {
+        this.price = price;
+    }
 
-	/**
-	 * @return the reorderLevel
-	 */
-	public int getReorderLevel() {
-		return reorderLevel;
-	}
+    /**
+     * @return the reorderLevel
+     */
+    public int getReorderLevel() {
+        return reorderLevel;
+    }
 
-	/**
-	 * @param reorderLevel
-	 *            the reorderLevel to set
-	 */
-	public void setReorderLevel(int reorderLevel) {
-		this.reorderLevel = reorderLevel;
-	}
+    /**
+     * @param reorderLevel the reorderLevel to set
+     */
+    public void setReorderLevel(int reorderLevel) {
+        this.reorderLevel = reorderLevel;
+    }
 
-	/**
-	 * @return the name
-	 */
-	public String getName() {
-		return name;
-	}
+    /**
+     * @return the stockOnHand
+     */
+    public int getStockOnHand() {
+        return stockOnHand;
+    }
 
-	/**
-	 * @return the id
-	 */
-	public String getId() {
-		return id;
-	}
+    /**
+     * @param stockOnHand the stockOnHand to set
+     */
+    public void setStockOnHand(int stockOnHand) {
+        this.stockOnHand = stockOnHand;
+    }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(currentPrice, id, name, reorderLevel, stockOnHand);
-	}
+    @Override
+    public String toString() {
+        return "Product [name=" + name + ", id=" + id + ", stockOnHand="
+                + stockOnHand + ", currentPrice=" + price + ", reorderLevel="
+                + reorderLevel + "]";
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (!(obj instanceof Product)) {
-			return false;
-		}
-		Product other = (Product) obj;
-		return Objects.equals(currentPrice, other.currentPrice) && Objects.equals(id, other.id)
-				&& Objects.equals(name, other.name) && Objects.equals(reorderLevel, other.reorderLevel)
-				&& Objects.equals(stockOnHand, other.stockOnHand);
-	}
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        return result;
+    }
 
-	@Override
-	public String toString() {
-		return "Product [name=" + name + ", id=" + id + ", stockOnHand=" + stockOnHand + ", currentPrice="
-				+ currentPrice + ", reorderLevel=" + reorderLevel + "]";
-	}
+    /**
+     * Checks whether the product is equal to the one supplied
+     * 
+     * @param object the product which should be compared
+     * @return true iff the product ids match
+     */
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) {
+            return true;
+        }
+        if (!(object instanceof Product)) {
+            return false;
+        }
+        Product other = (Product) object;
+        if (id == null) {
+            if (other.id != null) {
+                return false;
+            }
+        } else if (!id.equals(other.id)) {
+            return false;
+        }
+        return true;
+    }
 
 }
