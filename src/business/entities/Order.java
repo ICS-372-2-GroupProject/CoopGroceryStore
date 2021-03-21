@@ -32,6 +32,9 @@ public class Order implements Serializable {
 	private Calendar dateOrdered;
 	private int qtyOrdered;
 	private boolean orderOutstanding;
+	private static final String Order_Num = "O";
+
+	private static int idCounter;
 
 	/**
 	 * @param id
@@ -39,13 +42,13 @@ public class Order implements Serializable {
 	 * @param dateOrdered
 	 * @param qtyOrdered
 	 */
-	public Order(String id, Product productOrdered, Calendar dateOrdered, int qtyOrdered) {
+	public Order(Product productOrdered, int qtyOrdered) {
 		super();
-		this.id = id;
 		this.productOrdered = productOrdered;
-		this.dateOrdered = dateOrdered;
+		this.dateOrdered = Calendar.getInstance();
 		this.qtyOrdered = qtyOrdered;
 		this.orderOutstanding = true;
+		id = Order_Num + ++idCounter;
 	}
 
 	/**
@@ -85,8 +88,8 @@ public class Order implements Serializable {
 	/**
 	 * @return the dateOrdered
 	 */
-	public Calendar getDateOrdered() {
-		return dateOrdered;
+	public String getDateOrdered() {
+		return dateOrdered.getTime().toString();
 	}
 
 	/**

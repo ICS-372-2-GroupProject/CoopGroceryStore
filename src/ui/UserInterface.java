@@ -76,9 +76,7 @@ public class UserInterface {
 					"Do you want to generate a test bed and invoke the functionality using asserts? ")) {
 				new AutomatedTester().testAll();
 			}
-
 		}
-
 	}
 
 	/**
@@ -296,8 +294,7 @@ public class UserInterface {
 		Result result = store.removeMember(Request.instance());
 		switch (result.getResultCode()) {
 			case Result.NO_SUCH_MEMBER :
-				System.out.println("No such member with id "
-						+ Request.instance().getMemberId() + " in member list");
+				System.out.println("No such member with id " + Request.instance().getMemberId() + " in member list");
 				break;
 			case Result.OPERATION_FAILED :
 				System.out.println("Member could not be removed");

@@ -33,7 +33,6 @@ import business.entities.Member;
 import business.entities.Order;
 import business.entities.Product;
 import business.entities.Transaction;
-import business.entities.iterators.FilteredIterator;
 import business.entities.iterators.FilteredOrderIterator;
 import business.entities.iterators.SafeIterator;
 
@@ -268,6 +267,8 @@ public class Store implements Serializable {
 		if (products.insertProduct(product)) {
 			result.setResultCode(Result.OPERATION_COMPLETED);
 			result.setProductFields(product);
+			Order newOrder = new Order(product, request.getProductReorderLevel() * 2);
+			orders.insertOrder(newOrder);
 			return result;
 		}
 		result.setResultCode(Result.OPERATION_FAILED);
