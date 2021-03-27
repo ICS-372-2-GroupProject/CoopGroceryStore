@@ -2,6 +2,7 @@ package business.tests;
 
 import business.entities.Member;
 import business.entities.Product;
+import business.entities.Order;
 import business.facade.Request;
 import business.facade.Result;
 import business.facade.Store;
@@ -9,35 +10,28 @@ import business.facade.Store;
 /**
  * This class generates sample automated tests for the Store system using
  * asserts.
+ * 
  * @author Brahma Dathan
  */
 public class AutomatedTester {
 	private Store store;
-	private String[] memberNames = {"Rich Fritz", "Ryan Kinsella",
-			"Nalongsone Danddank", "Marc Wedo", "Gilbert Ponsness"};
-	private String[] addresses = {"123 4th street", "567 8th Street",
-			"910 11th Ave", "1213 14th Ave", "1516 17th Ln"};
-	private String[] phones = {"123-4567", "234-5678", "345-7890", "987-6543",
-			"876-5432"};
-	private String[] dateJoined = {"01-JAN-2021", "02-FEB-2021", "03-MAR-2021",
-			"04-APR-2021", "05-MAY-2021"};
-	private String[] fee = {"20", "20", "20", "20", "20"};
+	private String[] memberNames = { "Rich Fritz", "Ryan Kinsella", "Nalongsone Danddank", "Marc Wedo",
+			"Gilbert Ponsness" };
+	private String[] addresses = { "123 4th street", "567 8th Street", "910 11th Ave", "1213 14th Ave",
+			"1516 17th Ln" };
+	private String[] phones = { "123-4567", "234-5678", "345-7890", "987-6543", "876-5432" };
+	private String[] dateJoined = { "01-JAN-2021", "02-FEB-2021", "03-MAR-2021", "04-APR-2021", "05-MAY-2021" };
+	private String[] fee = { "20", "20", "20", "20", "20" };
 	private Member[] members = new Member[5];
-	private String[] productName = {"Soda 12pk", "Corn Chips", "Apples 2lb",
-			"Cookies", "Bread", "Eggs 12pk", "Watermelon", "Bananas 1lb",
-			"Sliced Ham", "CerealA", "Pasta", "Marinara Sauce", "Salsa",
-			"Canned Tuna", "Ground Beef 1lb", "Ribeye 1lb", "Chicken 1lb",
-			"Almonds 1lb", "Frozen Pizza", "Apple Juice"};
-	private String[] productId = {"01", "02", "03", "04", "05", "06", "07",
-			"08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18",
-			"19", "20"};
-	private int[] stockOnHand = {10, 12, 14, 16, 18, 10, 12, 14, 16, 18, 10, 12,
-			14, 16, 18, 10, 12, 14, 16, 18};
-	private String[] currentPrice = {"4.50", "3.25", "5.00", "1.75", "2.75",
-			"4.25", "2.00", "0.95", "7.75", "5.75", "1.50", "5.95", "4.85",
-			"1.99", "3.85", "14.50", "5.15", "9.00", "6.75", "2.99"};
-	private int[] reorderLevel = {5, 6, 7, 8, 9, 5, 6, 7, 8, 9, 5, 6, 7, 8, 9,
-			5, 6, 7, 8, 9};
+	private String[] productName = { "Soda 12pk", "Corn Chips", "Apples 2lb", "Cookies", "Bread", "Eggs 12pk",
+			"Watermelon", "Bananas 1lb", "Sliced Ham", "CerealA", "Pasta", "Marinara Sauce", "Salsa", "Canned Tuna",
+			"Ground Beef 1lb", "Ribeye 1lb", "Chicken 1lb", "Almonds 1lb", "Frozen Pizza", "Apple Juice" };
+	private String[] productId = { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14",
+			"15", "16", "17", "18", "19", "20" };
+	private int[] stockOnHand = { 10, 12, 14, 16, 18, 10, 12, 14, 16, 18, 10, 12, 14, 16, 18, 10, 12, 14, 16, 18 };
+	private String[] currentPrice = { "4.50", "3.25", "5.00", "1.75", "2.75", "4.25", "2.00", "0.95", "7.75", "5.75",
+			"1.50", "5.95", "4.85", "1.99", "3.85", "14.50", "5.15", "9.00", "6.75", "2.99" };
+	private int[] reorderLevel = { 5, 6, 7, 8, 9, 5, 6, 7, 8, 9, 5, 6, 7, 8, 9, 5, 6, 7, 8, 9 };
 	private Product[] products = new Product[20];
 
 	/**
@@ -76,19 +70,30 @@ public class AutomatedTester {
 		}
 	}
 
-	public void testSearchMembership() {
-		Request.instance().setMemberId("M1");
-		assert Store.instance().searchMembership(Request.instance())
-				.getMemberId().equals("M1");
-		Request.instance().setMemberId("M4");
-		assert Store.instance().searchMembership(Request.instance()) == null;
+	public void testProcessShipment() {
+		Request.instance().setOrderId("O1");
+		Result result = Store.instance().processShipment(Request.instance());
+		assert result.getResultCode() == Result.OPERATION_COMPLETED;
+		Request.instance().setOrderId("O20");
+		result = Store.instance().processShipment(Request.instance());
+		assert result.getResultCode() == Result.OPERATION_COMPLETED;
+		Request.instance().setOrderId("O21");
+		result = Store.instance().processShipment(Request.instance());
+		assert result.getResultCode() == Result.NO_ORDER_FOUND;
 	}
 
+	/*
+	 * public void testSearchMembership() { Request.instance().setMemberId("M1");
+	 * assert
+	 * Store.instance().searchMembership(Request.instance()).getMemberId().equals(
+	 * "M1"); Request.instance().setMemberId("M6"); assert
+	 * Store.instance().searchMembership(Request.instance()) == null; }
+	 */
 	public void testAll() {
 		testAddMember();
 		testAddProduct();
-		testSearchMembership();
-
+		// testSearchMembership();
+		testProcessShipment();
 	}
 
 	public static void main(String[] args) {
