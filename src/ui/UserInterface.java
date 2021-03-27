@@ -67,7 +67,7 @@ public class UserInterface {
 	 * Otherwise, it gets a singleton Store object.
 	 */
 	private UserInterface() {
-		if (yesOrNo("Look for saved data and  use it?")) {
+		if (yesOrNo("Look for saved data and use it?")) {
 			retrieve();
 		} else {
 			store = store.instance();
@@ -93,7 +93,8 @@ public class UserInterface {
 	/**
 	 * Gets a token after prompting
 	 * 
-	 * @param prompt - whatever the user wants as prompt
+	 * @param prompt
+	 *            - whatever the user wants as prompt
 	 * @return - the token from the keyboard
 	 */
 	public String getToken(String prompt) {
@@ -114,7 +115,8 @@ public class UserInterface {
 	/**
 	 * Gets a name after prompting
 	 * 
-	 * @param prompt - whatever the user wants as prompt
+	 * @param prompt
+	 *            - whatever the user wants as prompt
 	 * @return - the token from the keyboard
 	 */
 	public String getName(String prompt) {
@@ -133,7 +135,8 @@ public class UserInterface {
 	/**
 	 * Queries for a yes or no and returns true for yes and false for no
 	 * 
-	 * @param prompt The string to be prepended to the yes/no prompt
+	 * @param prompt
+	 *            The string to be prepended to the yes/no prompt
 	 * @return true for yes and false for no
 	 */
 	private boolean yesOrNo(String prompt) {
@@ -147,7 +150,8 @@ public class UserInterface {
 	/**
 	 * Converts the string to a number
 	 * 
-	 * @param prompt the string for prompting
+	 * @param prompt
+	 *            the string for prompting
 	 * @return the integer corresponding to the string
 	 */
 	public int getNumber(String prompt) {
@@ -165,7 +169,8 @@ public class UserInterface {
 	/**
 	 * Prompts for a date and gets a date object
 	 * 
-	 * @param prompt the prompt
+	 * @param prompt
+	 *            the prompt
 	 * @return the data as a Calendar object
 	 */
 	public Calendar getDate(String prompt) {
@@ -412,6 +417,7 @@ public class UserInterface {
 				System.out.println(result.getProductName() + "(Product ID: " + result.getProductId() + ") updated!");
 				System.out.println("New quantity in stock: " + result.getProductStockOnHand());
 			} else {
+				System.out.println(result.getResultCode()); // Line added for testing. Remove from final program
 				System.out.println("Could not process shipment");
 			}
 			if (!yesOrNo("Process more orders?")) {
@@ -479,9 +485,11 @@ public class UserInterface {
 			case CHANGE_PRICE:
 				changePrice();
 				break;
-			case name7:
+			case GET_PRODUCT_INFO:
+				getProductInfo();
 				break;
-			case name8:
+			case GET_MEMBER_INFO:
+				getMemberInfo();
 				break;
 			case GET_TRANSACTIONS:
 				getTransactions();
@@ -508,7 +516,8 @@ public class UserInterface {
 	/**
 	 * The method to start the application. Simply calls process().
 	 * 
-	 * @param args not used
+	 * @param args
+	 *            not used
 	 */
 	public static void main(String[] args) {
 		UserInterface.instance().process();
