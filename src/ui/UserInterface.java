@@ -161,7 +161,7 @@ public class UserInterface {
 				Integer number = Integer.valueOf(item);
 				return number.intValue();
 			} catch (NumberFormatException nfe) {
-				System.out.println("Please input a number ");
+				System.out.println("Please input a number");
 			}
 		} while (true);
 	}
@@ -195,12 +195,12 @@ public class UserInterface {
 	public int getCommand() {
 		do {
 			try {
-				int value = Integer.parseInt(getToken("Enter command:" + HELP + " for help"));
+				int value = Integer.parseInt(getToken("Enter command (" + HELP + " for help): "));
 				if (value >= EXIT && value <= HELP) {
 					return value;
 				}
 			} catch (NumberFormatException nfe) {
-				System.out.println("Enter a number");
+				System.out.println("Enter a number: ");
 			}
 		} while (true);
 	}
@@ -417,7 +417,6 @@ public class UserInterface {
 				System.out.println(result.getProductName() + "(Product ID: " + result.getProductId() + ") updated!");
 				System.out.println("New quantity in stock: " + result.getProductStockOnHand());
 			} else {
-				System.out.println(result.getResultCode()); // Line added for testing. Remove from final program
 				System.out.println("Could not process shipment");
 			}
 			if (!yesOrNo("Process more orders?")) {
