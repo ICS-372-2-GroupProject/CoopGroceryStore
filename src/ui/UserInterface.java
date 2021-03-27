@@ -53,8 +53,8 @@ public class UserInterface {
 	private static final int CHECK_OUT_ITEMS = 4;
 	private static final int PROCESS_SHIPMENT = 5;
 	private static final int CHANGE_PRICE = 6;
-	private static final int name7 = 7;
-	private static final int name8 = 8;
+	private static final int GET_PRODUCT_INFO = 7;
+	private static final int GET_MEMBER_INFO = 8;
 	private static final int GET_TRANSACTIONS = 9;
 	private static final int GET_OUTSTANDING_ORDERS = 10;
 	private static final int GET_MEMBERS = 11;
@@ -212,8 +212,8 @@ public class UserInterface {
 		System.out.println(CHECK_OUT_ITEMS + " to check out items for purchase");
 		System.out.println(PROCESS_SHIPMENT + " to process a shipment");
 		System.out.println(CHANGE_PRICE + " to change the price of a product");
-		System.out.println(name7 + " ???");
-		System.out.println(name8 + " ???");
+		System.out.println(GET_PRODUCT_INFO + " to list details of a product");
+		System.out.println(GET_MEMBER_INFO + " to list details of a member");
 		System.out.println(GET_TRANSACTIONS + " ???");
 		System.out.println(GET_OUTSTANDING_ORDERS + " to print all outstanding orders");
 		System.out.println(GET_MEMBERS + " to print all members");
@@ -326,6 +326,22 @@ public class UserInterface {
 		default:
 			System.out.println("An error has occurred");
 		}
+	}
+
+	/**
+	 * Prompts user for product name (partial name is acceptable). Lists all
+	 * products that begin with input string provided by user.
+	 */
+	public void getProductInfo() {
+
+	}
+
+	/**
+	 * Prompts user for member name (partial name is acceptable). Lists all members
+	 * whose name begins with input string provided by user.
+	 */
+	public void getMemberInfo() {
+
 	}
 
 	/**
