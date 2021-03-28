@@ -93,8 +93,7 @@ public class UserInterface {
 	/**
 	 * Gets a token after prompting
 	 * 
-	 * @param prompt
-	 *            - whatever the user wants as prompt
+	 * @param prompt - whatever the user wants as prompt
 	 * @return - the token from the keyboard
 	 */
 	public String getToken(String prompt) {
@@ -115,8 +114,7 @@ public class UserInterface {
 	/**
 	 * Gets a name after prompting
 	 * 
-	 * @param prompt
-	 *            - whatever the user wants as prompt
+	 * @param prompt - whatever the user wants as prompt
 	 * @return - the token from the keyboard
 	 */
 	public String getName(String prompt) {
@@ -135,8 +133,7 @@ public class UserInterface {
 	/**
 	 * Queries for a yes or no and returns true for yes and false for no
 	 * 
-	 * @param prompt
-	 *            The string to be prepended to the yes/no prompt
+	 * @param prompt The string to be prepended to the yes/no prompt
 	 * @return true for yes and false for no
 	 */
 	private boolean yesOrNo(String prompt) {
@@ -150,8 +147,7 @@ public class UserInterface {
 	/**
 	 * Converts the string to a number
 	 * 
-	 * @param prompt
-	 *            the string for prompting
+	 * @param prompt the string for prompting
 	 * @return the integer corresponding to the string
 	 */
 	public int getNumber(String prompt) {
@@ -169,8 +165,7 @@ public class UserInterface {
 	/**
 	 * Prompts for a date and gets a date object
 	 * 
-	 * @param prompt
-	 *            the prompt
+	 * @param prompt the prompt
 	 * @return the data as a Calendar object
 	 */
 	public Calendar getDate(String prompt) {
@@ -338,7 +333,22 @@ public class UserInterface {
 	 * products that begin with input string provided by user.
 	 */
 	public void getProductInfo() {
-
+		String name = getName("Product name starts with");
+		Boolean productFound = false;
+		Iterator<Result> iterator = store.getProduct();
+		while (iterator.hasNext()) {
+			Result result = iterator.next();
+			if (result.getProductName().toUpperCase().startsWith(name.toUpperCase())) {
+				System.out
+						.println(result.getProductName() + " " + result.getProductId() + " " + result.getProductPrice()
+								+ " " + result.getProductStockOnHand() + " " + result.getProductReorderLevel());
+				productFound = true;
+			}
+		}
+		if (productFound = false) {
+			System.out.println("Product name not found.");
+		}
+		System.out.println("End of listing");
 	}
 
 	/**
@@ -346,7 +356,21 @@ public class UserInterface {
 	 * whose name begins with input string provided by user.
 	 */
 	public void getMemberInfo() {
-
+		String name = getName("Member name starts with");
+		Boolean memberFound = false;
+		Iterator<Result> iterator = store.getMembers();
+		while (iterator.hasNext()) {
+			Result result = iterator.next();
+			if (result.getMemberName().toUpperCase().startsWith(name.toUpperCase())) {
+				System.out.println(result.getMemberName() + " " + result.getMemberAddress() + " "
+						+ result.getMemberFee() + " " + result.getMemberId());
+				memberFound = true;
+			}
+		}
+		if (memberFound = false) {
+			System.out.println("Member name not found.");
+		}
+		System.out.println("End of listing");
 	}
 
 	/**
@@ -515,8 +539,7 @@ public class UserInterface {
 	/**
 	 * The method to start the application. Simply calls process().
 	 * 
-	 * @param args
-	 *            not used
+	 * @param args not used
 	 */
 	public static void main(String[] args) {
 		UserInterface.instance().process();
