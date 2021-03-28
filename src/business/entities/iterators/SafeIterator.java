@@ -19,7 +19,7 @@ import business.facade.Result;
  * 
  * @author Brahma Dathan
  * @param <T>
- *            Either Book or Member
+ *            Either Product or Member
  */
 public class SafeIterator<T> implements Iterator<Result> {
 	private Iterator<T> iterator;
@@ -36,7 +36,7 @@ public class SafeIterator<T> implements Iterator<Result> {
 	 */
 	public abstract static class Type {
 		/**
-		 * The copy method is used to copy the object to Result. Object is Book or
+		 * The copy method is used to copy the object to Result. Object is Product or
 		 * Member at present.
 		 * 
 		 * @param result
