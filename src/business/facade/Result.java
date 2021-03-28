@@ -6,7 +6,7 @@ package business.facade;
  * int code, plus values of selected fields of Product, Member, and Order as
  * listed below. Product: ID, Name, Price, Reorder Level, Stock on hand Member:
  * ID, Name, Address, Phone Number, Date Joined, Fee Order: ID, Product ordered,
- * Quantity Ordered
+ * Quantity Ordered.
  * 
  * @author Brahma Dathan
  */
