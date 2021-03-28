@@ -445,7 +445,7 @@ public class UserInterface {
 	 */
 	private void save() {
 		if (store.save()) {
-			System.out.println(" The store has been successfully saved in the file LibraryData \n");
+			System.out.println(" The store has been successfully saved in the file StoreData \n");
 		} else {
 			System.out.println(" There has been an error in saving \n");
 		}
