@@ -26,11 +26,10 @@ public class OrderList implements Iterable<Order>, Serializable {
 	}
 
 	/**
-	 * Removes the hold for a specific book
+	 * Removes Order
 	 * 
-	 * @param bookId
-	 *            the book id for removing a hold
-	 * @return the removed Hold object if the hold could be removed; otherwise, nul
+	 * @param orderId the Order id
+	 * @return the order if the order could be removed; otherwise, null
 	 */
 	public Order removeOrder(String orderId) {
 		for (ListIterator<Order> iterator = orders.listIterator(); iterator.hasNext();) {
