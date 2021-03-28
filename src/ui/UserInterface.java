@@ -170,7 +170,7 @@ public class UserInterface {
 	 * Prompts for a date and gets a date object
 	 * 
 	 * @param prompt
-	 *            the prompt
+	 *            the string for prompt ing
 	 * @return the data as a Calendar object
 	 */
 	public Calendar getDate(String prompt) {
@@ -366,7 +366,12 @@ public class UserInterface {
 	}
 
 	/**
-	 * Method to be called for displaying outstanding orders.
+	 * Method iterates through OrderList and returns a list of orders that are
+	 * currently outstanding (not yet received and processed).
+	 * 
+	 * @author Marc Wedo
+	 * @param None
+	 * @return List of outstanding order (printed on console)
 	 */
 	public void getOutstandingOrders() {
 		Iterator<Order> result = store.getOutstandingOrders();
@@ -407,7 +412,16 @@ public class UserInterface {
 	}
 
 	/**
-	 * Method to be called for processing a shipment.
+	 * Method for processing a shipment that has been received at the store. This
+	 * updates the quantity in stock based on the quantity received in the shipment,
+	 * then displays the product that was updated and the new quantity in stock.
+	 * Processed shipments are marked as no longer outstanding using the
+	 * orderOutstanding field in Order.
+	 * 
+	 * @author Marc Wedo
+	 * @param None
+	 * @return Product ID, Product Name, and current quantity in stock (printed on
+	 *         console)
 	 */
 	public void processShipment() {
 		do {
@@ -426,12 +440,12 @@ public class UserInterface {
 	}
 
 	/**
-	 * Method to be called for saving the Library object. Uses the appropriate
-	 * Library method for saving.
+	 * Method to be called for saving the Store object. Uses the appropriate Store
+	 * method for saving.
 	 */
 	private void save() {
 		if (store.save()) {
-			System.out.println(" The library has been successfully saved in the file LibraryData \n");
+			System.out.println(" The store has been successfully saved in the file LibraryData \n");
 		} else {
 			System.out.println(" There has been an error in saving \n");
 		}

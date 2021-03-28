@@ -3,7 +3,7 @@ package business.facade;
 import java.util.Calendar;
 
 /**
- * This class is used for requesting many of the results of the library system's
+ * This class is used for requesting many of the results of the store system's
  * business logic to user interface. It is a singleton At present, the Request
  * object returns an int code,plus values of selected fields of Product and
  * Member. They are the product Name, id, reorderLevel , currentPrice, member
