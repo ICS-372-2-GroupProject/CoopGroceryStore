@@ -200,18 +200,23 @@ public class Member implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        if (this == object)
+        if (this == object) {
             return true;
-        if (object == null)
+        }
+        if (object == null) {
             return false;
-        if (!(object instanceof Member))
+        }
+        if (!(object instanceof Member)) {
             return false;
+        }
         Member other = (Member) object;
         if (id == null) {
-            if (other.id != null)
+            if (other.id != null) {
                 return false;
-        } else if (!id.equals(other.id))
+            }
+        } else if (!id.equals(other.id)) {
             return false;
+        }
         return true;
     }
 
