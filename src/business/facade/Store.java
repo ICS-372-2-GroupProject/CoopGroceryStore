@@ -307,6 +307,12 @@ public class Store implements Serializable {
             result.setResultCode(Result.NAME_IN_USE);
             return result;
         }
+        try {
+            Double.parseDouble(request.getProductPrice());
+        } catch (Error NumberExceptionError) {
+            result.setResultCode(Result.NOT_DECIMAL);
+            return result;
+        }
         if (products.insertProduct(product)) {
             result.setResultCode(Result.OPERATION_COMPLETED);
             result.setProductFields(product);
@@ -342,6 +348,11 @@ public class Store implements Serializable {
         product.setPrice(request.getProductPrice());
         result.setResultCode(Result.OPERATION_COMPLETED);
         result.setProductFields(product);
+        return result;
+    }
+
+    public Result checkOutItem(Request request) {
+        Result result = new Result();
         return result;
     }
 

@@ -228,5 +228,4 @@ public class Member implements Serializable {
             throws IOException, ClassNotFoundException {
         idCounter = (int) input.readObject();
     }
-
 }
