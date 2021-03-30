@@ -43,7 +43,7 @@ import business.entities.iterators.SafeIterator;
  */
 public class Store implements Serializable {
     private static final long serialVersionUID = 1L;
-    private ProductList products = new ProductList();
+    private Inventory inventory = new Inventory();
     private MemberList members = new MemberList();
     private OrderList orders = new OrderList();
     private static Store store;
@@ -67,7 +67,7 @@ public class Store implements Serializable {
      * 
      * @author Brahma Dathan and Sarnath Ramnath
      */
-    private class ProductList implements Iterable<Product>, Serializable {
+    private class Inventory implements Iterable<Product>, Serializable {
         private static final long serialVersionUID = 1L;
         private List<Product> products = new LinkedList<Product>();
 
@@ -297,12 +297,12 @@ public class Store implements Serializable {
                 request.getProductId(), request.getProductPrice(),
                 request.getProductReorderLevel(),
                 request.getProductStockOnHand());
-        Product checkExists = products.search(request.getProductId());
+        Product checkExists = inventory.search(request.getProductId());
         if (checkExists != null) {
             result.setResultCode(Result.PRODUCT_EXISTS);
             return result;
         }
-        checkExists = products.searchName(request.getProductName());
+        checkExists = inventory.searchName(request.getProductName());
         if (checkExists != null) {
             result.setResultCode(Result.NAME_IN_USE);
             return result;
@@ -313,7 +313,7 @@ public class Store implements Serializable {
             result.setResultCode(Result.NOT_DECIMAL);
             return result;
         }
-        if (products.insertProduct(product)) {
+        if (inventory.insertProduct(product)) {
             result.setResultCode(Result.OPERATION_COMPLETED);
             result.setProductFields(product);
             Order newOrder = new Order(product,
@@ -340,7 +340,7 @@ public class Store implements Serializable {
             result.setResultCode(Result.NOT_DECIMAL);
             return result;
         }
-        Product product = products.search(request.getProductId());
+        Product product = inventory.search(request.getProductId());
         if (product == null) {
             result.setResultCode(Result.PRODUCT_NOT_FOUND);
             return result;
@@ -447,7 +447,7 @@ public class Store implements Serializable {
         }
         result.setOrderFields(order);
         Request.instance().setProductId(order.getProductOrdered().getId());
-        Product product = products.search(request.getProductId());
+        Product product = inventory.search(request.getProductId());
         if (product == null) {
             result.setResultCode(Result.PRODUCT_NOT_FOUND);
             return result;
@@ -553,7 +553,7 @@ public class Store implements Serializable {
      * @return an Iterator to Result - only the Product fields are valid.
      */
     public Iterator<Result> getProduct() {
-        return new SafeIterator<Product>(products.iterator(),
+        return new SafeIterator<Product>(inventory.iterator(),
                 SafeIterator.PRODUCT);
     }
 
@@ -562,6 +562,6 @@ public class Store implements Serializable {
      */
     @Override
     public String toString() {
-        return products + "\n" + members;
+        return inventory + "\n" + members;
     }
 }
