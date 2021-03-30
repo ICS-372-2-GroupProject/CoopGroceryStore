@@ -293,10 +293,6 @@ public class Store implements Serializable {
      */
     public Result addProduct(Request request) {
         Result result = new Result();
-        Product product = new Product(request.getProductName(),
-                request.getProductId(), request.getProductPrice(),
-                request.getProductReorderLevel(),
-                request.getProductStockOnHand());
         Product checkExists = inventory.search(request.getProductId());
         if (checkExists != null) {
             result.setResultCode(Result.PRODUCT_EXISTS);
@@ -313,6 +309,8 @@ public class Store implements Serializable {
             result.setResultCode(Result.NOT_DECIMAL);
             return result;
         }
+		Product product = new Product(request.getProductName(), request.getProductId(), request.getProductPrice(),
+				request.getProductReorderLevel(), request.getProductStockOnHand());
         if (inventory.insertProduct(product)) {
             result.setResultCode(Result.OPERATION_COMPLETED);
             result.setProductFields(product);
