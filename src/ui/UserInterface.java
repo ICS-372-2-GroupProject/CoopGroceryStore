@@ -326,22 +326,39 @@ public class UserInterface {
     public void checkOutItems() {
         Request.instance().setMemberId(getToken("Enter member id"));
         Result result = store.searchMembership(Request.instance());
-        if (result.getResultCode() == Result.NO_SUCH_MEMBER) {
+        switch (result.getResultCode()) {
+        case Result.NO_SUCH_MEMBER:
             System.out.println(
                     "No member with id " + Request.instance().getMemberId());
-            return;
+            break;
+        case Result.OPERATION_COMPLETED:
+            result = store.beginTransaction(Request.instance());
+            do {
+                Request.instance().setProductId(getToken("Enter product id"));
+                switch (result.getResultCode()) {
+                case Result.PRODUCT_NOT_FOUND:
+                    System.out.println("No product with id "
+                            + Request.instance().getProductId());
+                    break;
+                case Result.OPERATION_COMPLETED:
+                    Request.instance().setPurchaseAmount(
+                            getNumber("Enter amount purchased"));
+                    result = store.checkOutItem(Request.instance());
+                    if (result.getResultCode() == Result.OPERATION_COMPLETED) {
+                        System.out.println("");
+                    } else {
+                        System.out.println("Product could not be sold");
+                    }
+                    break;
+                default:
+                    System.out.println("Product could not be found");
+                }
+            } while (yesOrNo("Check out another item?"));
+            // More code
+            break;
+        default:
+            System.out.println("Member could not be found");
         }
-        do {
-            Request.instance().setProductId(getToken("Enter product id"));
-            Request.instance()
-                    .setPurchaseAmount(getNumber("Enter amount purchased"));
-            result = store.checkOutItem(Request.instance());
-            if (result.getResultCode() == Result.OPERATION_COMPLETED) {
-                System.out.println("");
-            } else {
-                System.out.println("Product could not be sold");
-            }
-        } while (yesOrNo("Issue more books?"));
     }
 
     /**

@@ -3,6 +3,7 @@ package business.facade;
 import business.entities.Member;
 import business.entities.Order;
 import business.entities.Product;
+import business.entities.Transaction;
 
 /**
  * The DataTransfer class is used to facilitate data transfer between Store and
@@ -28,10 +29,12 @@ public abstract class DataTransfer {
     private Product orderedProduct;
     private int orderQuantity;
     private int purchaseAmount;
-    private String totalPrice;
+    private String purchasePrice;
+    private String purchaseTotal;
+    private Transaction currentTransaction;
 
     /**
-     * This sets all fields to "none" if String or 0 if int or double.
+     * Sets all fields to either "none", 0, or null (depending on data type).
      */
     public DataTransfer() {
         reset();
@@ -141,12 +144,28 @@ public abstract class DataTransfer {
         this.purchaseAmount = amountPurchased;
     }
 
-    public String getTotalPrice() {
-        return totalPrice;
+    public String getPurchasePrice() {
+        return purchasePrice;
     }
 
-    public void setTotalPrice(String totalPrice) {
-        this.totalPrice = totalPrice;
+    public void setPurchasePrice(String purchasePrice) {
+        this.purchasePrice = purchasePrice;
+    }
+
+    public String getPurchaseTotal() {
+        return purchaseTotal;
+    }
+
+    public void setPurchaseTotal(String purchaseTotal) {
+        this.purchaseTotal = purchaseTotal;
+    }
+
+    public Transaction getCurrentTransaction() {
+        return currentTransaction;
+    }
+
+    public void setCurrentTransaction(Transaction currentTransaction) {
+        this.currentTransaction = currentTransaction;
     }
 
     /**
@@ -205,7 +224,7 @@ public abstract class DataTransfer {
     }
 
     /**
-     * Sets all String fields to "none" or 0
+     * Resets all fields to default values.
      */
     public void reset() {
         productId = "none";

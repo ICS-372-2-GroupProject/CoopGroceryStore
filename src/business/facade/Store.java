@@ -356,6 +356,11 @@ public class Store implements Serializable {
         return result;
     }
 
+    public Result beginTransaction(Request request) {
+        Result result = new Result();
+        return result;
+    }
+
     /**
      * Organizes the operations for enrolling a member - code updates by Richard
      * Fritz
