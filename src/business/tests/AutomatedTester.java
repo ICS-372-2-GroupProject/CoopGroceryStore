@@ -1,8 +1,10 @@
 package business.tests;
 
+import java.util.Calendar;
+import java.util.Iterator;
+
 import business.entities.Member;
 import business.entities.Product;
-import business.entities.Order;
 import business.facade.Request;
 import business.facade.Result;
 import business.facade.Store;
@@ -82,6 +84,31 @@ public class AutomatedTester {
 		assert result.getResultCode() == Result.NO_ORDER_FOUND;
 	}
 
+	public void testGetTransactions() {
+		Calendar beginDate = Calendar.getInstance();
+		beginDate.set(2012, Calendar.JULY, 1, 0, 0, 0);
+
+		Calendar endDate = Calendar.getInstance();
+//		Request.instance().setMemberName(memberNames[0]);
+//		Request.instance().setMemberAddress(addresses[0]);
+//		Request.instance().setMemberPhone(phones[0]);
+//		Request.instance().setMemberDateJoined(dateJoined[0]);
+//		Request.instance().setMemberFee(fee[0]);
+//		endDate.set(2020, Calendar.JULY, 1, 0, 0, 0);
+//		members[0] = 
+		Request.instance().setMemberId("M1");
+		Request.instance().setBeginDate(beginDate);
+		Request.instance().setEndDate(endDate);
+		Iterator<Result> results = Store.instance().getTransactions(Request.instance());
+		System.out.println("haha");
+		while (results.hasNext()) {
+			Result result = (Result) results.next();
+			System.out.println(result.getCurrentTransaction().getType() + "   "
+					+ result.getCurrentTransaction().getTitle() + "\n");
+		}
+
+	}
+
 	/*
 	 * public void testSearchMembership() { Request.instance().setMemberId("M1");
 	 * assert
@@ -94,6 +121,7 @@ public class AutomatedTester {
 		testAddProduct();
 		// testSearchMembership();
 		testProcessShipment();
+		testGetTransactions();
 	}
 
 	public static void main(String[] args) {

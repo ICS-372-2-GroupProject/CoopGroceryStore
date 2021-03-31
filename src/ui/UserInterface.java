@@ -30,7 +30,6 @@ import java.util.Iterator;
 import java.util.StringTokenizer;
 
 import business.entities.Order;
-import business.entities.Transaction;
 import business.facade.Request;
 import business.facade.Result;
 import business.facade.Store;
@@ -450,10 +449,11 @@ public class UserInterface {
 				getDate("Please enter the end date for which you want records as mm/dd/yy"));
 		Request.instance().setBeginDate(beginAndEndDate[0]);
 		Request.instance().setEndDate(beginAndEndDate[1]);
-		Iterator<Transaction> result = store.getTransactions(Request.instance());
-		while (result.hasNext()) {
-			Transaction transaction = (Transaction) result.next();
-			System.out.println(transaction.getType() + "   " + transaction.getTitle() + "\n");
+		Iterator<Result> results = store.getTransactions(Request.instance());
+		while (results.hasNext()) {
+			Result result = (Result) results.next();
+			System.out.println(result.getCurrentTransaction().getType() + "   "
+					+ result.getCurrentTransaction().getTitle() + "\n");
 		}
 		System.out.println("\n End of transactions \n");
 	}

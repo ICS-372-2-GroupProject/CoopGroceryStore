@@ -457,12 +457,15 @@ public class Store implements Serializable {
 	 * @param EndDate   date of issue
 	 * @return iterator to the collection
 	 */
-	public Iterator<Transaction> getTransactions(Request request) {
+	public Iterator<Result> getTransactions(Request request) {
 		Member member = members.search(request.getMemberId());
 		if (member == null) {
-			return new LinkedList<Transaction>().iterator();
+			return new LinkedList<Result>().iterator();
 		}
-		return member.getTransactionsBetweenTwoDate(request.getBeginDate(), request.getEndDate());
+		return new SafeIterator<Transaction>(
+				member.getTransactionsBetweenTwoDate(request.getBeginDate(), request.getEndDate()),
+				SafeIterator.TRANSACTION);
+//		return member.getTransactionsBetweenTwoDate(request.getBeginDate(), request.getEndDate());
 	}
 
 	/**

@@ -5,8 +5,10 @@ import java.util.NoSuchElementException;
 
 import business.entities.Member;
 import business.entities.Product;
+import business.entities.Transaction;
 import business.entities.iterators.SafeIterator.Type.SafeMember;
 import business.entities.iterators.SafeIterator.Type.SafeProduct;
+import business.entities.iterators.SafeIterator.Type.SafeTransaction;
 import business.facade.Result;
 
 /**
@@ -26,6 +28,7 @@ public class SafeIterator<T> implements Iterator<Result> {
 	private Result result = new Result();
 	public static final Type PRODUCT = new SafeProduct();
 	public static final Type MEMBER = new SafeMember();
+	public static final Type TRANSACTION = new SafeTransaction();
 
 	/**
 	 * This class is designed to ensure that the appropriate object is used to copy
@@ -58,6 +61,14 @@ public class SafeIterator<T> implements Iterator<Result> {
 				result.setMemberFields(member);
 			}
 		}
+
+		public static class SafeTransaction extends Type {
+			@Override
+			public void copy(Result result, Object object) {
+				Transaction transaction = (Transaction) object;
+				result.setCurrentTransaction(transaction);
+			}
+		}
 	}
 
 	/**
@@ -66,10 +77,8 @@ public class SafeIterator<T> implements Iterator<Result> {
 	 * should be passed as the second parameter. If Iterator<Member> is passed as
 	 * the first parameter, SafeItearator.MEMBER should be the second parameter.
 	 * 
-	 * @param iterator
-	 *            Iterator<Product> or Iterator<Member>
-	 * @param type
-	 *            SafeItearator.PRODUCT or SafeItearator.MEMBER
+	 * @param iterator Iterator<Product> or Iterator<Member>
+	 * @param type     SafeItearator.PRODUCT or SafeItearator.MEMBER
 	 */
 	public SafeIterator(Iterator<T> iterator, Type type) {
 		this.iterator = iterator;
