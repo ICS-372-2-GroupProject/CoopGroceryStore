@@ -61,6 +61,11 @@ public class Transaction implements Serializable {
 				&& (date.get(Calendar.DATE) == this.date.get(Calendar.DATE)));
 	}
 
+	public boolean betweenTwoDate(Calendar beginDate, Calendar endDate) {
+
+		return this.date.after(beginDate) && this.date.before(endDate);
+	}
+
 	/**
 	 * Returns the type field
 	 * 

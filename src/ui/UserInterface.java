@@ -165,12 +165,9 @@ public class UserInterface {
 	/**
 	 * Prompts for a date and gets a date object
 	 * 
-<<<<<<< HEAD
+	 * 
 	 * @param prompt the prompt
-=======
-	 * @param prompt
-	 *            the string for prompt ing
->>>>>>> branch 'main' of https://github.com/ICS-372-2-GroupProject/CoopGroceryStore.git
+	 * 
 	 * @return the data as a Calendar object
 	 */
 	public Calendar getDate(String prompt) {
@@ -183,6 +180,28 @@ public class UserInterface {
 				return date;
 			} catch (Exception fe) {
 				System.out.println("Please input a date as mm/dd/yy");
+			}
+		} while (true);
+	}
+
+	/**
+	 * Prompts for get Begin And End Date.
+	 * 
+	 * @param beginDate - Calendar
+	 * @param endDate   - Calendar
+	 * 
+	 * @return array of Calendar that include begin and end dates.
+	 */
+	public Calendar[] getBeginAndEndDate(Calendar beginDate, Calendar endDate) {
+		do {
+			try {
+				if (beginDate.after(endDate)) {
+					throw new Exception();
+				}
+
+				return new Calendar[] { beginDate, endDate };
+			} catch (Exception fe) {
+				System.out.println("Please input a begin date before end date correctly!");
 			}
 		} while (true);
 	}
@@ -219,7 +238,7 @@ public class UserInterface {
 		System.out.println(CHANGE_PRICE + " to change the price of a product");
 		System.out.println(GET_PRODUCT_INFO + " to list details of a product");
 		System.out.println(GET_MEMBER_INFO + " to list details of a member");
-		System.out.println(GET_TRANSACTIONS + " ???");
+		System.out.println(GET_TRANSACTIONS + "  to print all transactions of product.");
 		System.out.println(GET_OUTSTANDING_ORDERS + " to print all outstanding orders");
 		System.out.println(GET_MEMBERS + " to print all members");
 		System.out.println(GET_PRODUCT + " to print all product");
@@ -385,7 +404,11 @@ public class UserInterface {
 	 */
 	public void getTransactions() {
 		Request.instance().setMemberId(getToken("Enter member id"));
-		Request.instance().setDate(getDate("Please enter the date for which you want records as mm/dd/yy"));
+		Calendar beginAndEndDate[] = getBeginAndEndDate(
+				getDate("Please enter the begin date for which you want records as mm/dd/yy"),
+				getDate("Please enter the end date for which you want records as mm/dd/yy"));
+		Request.instance().setBeginDate(beginAndEndDate[0]);
+		Request.instance().setEndDate(beginAndEndDate[1]);
 		Iterator<Transaction> result = store.getTransactions(Request.instance());
 		while (result.hasNext()) {
 			Transaction transaction = (Transaction) result.next();
