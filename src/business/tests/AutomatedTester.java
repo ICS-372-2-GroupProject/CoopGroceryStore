@@ -130,8 +130,8 @@ public class AutomatedTester {
         testAddMember();
         testAddProduct();
         // testSearchMembership();
-        testProcessShipment();
-        testGetTransactions();
+        // testProcessShipment();
+        // testGetTransactions();
     }
 
     public static void main(String[] args) {

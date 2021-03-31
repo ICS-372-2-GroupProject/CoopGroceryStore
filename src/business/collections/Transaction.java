@@ -27,6 +27,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import business.entities.LineItem;
+import business.entities.Product;
 
 /**
  * Represents a record of items purchased by a member at checkout as a single
@@ -47,6 +48,14 @@ public class Transaction implements Iterable<LineItem>, Serializable {
      */
     public Transaction() {
         date = new GregorianCalendar();
+    }
+
+    public void addItem(Product product, int purchaseAmount) {
+        groceryItems.add(new LineItem(product, purchaseAmount));
+    }
+
+    public void calculateTotal() {
+
     }
 
     /**

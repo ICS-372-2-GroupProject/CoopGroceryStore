@@ -4,19 +4,19 @@ public class LineItem {
     private String productName;
     private String productPrice;
     private int purchaseAmount;
-    private String purchasePrice;
+    private double purchasePrice;
 
-    private LineItem(String productName, String productPrice,
-            int purchaseAmount, String purchasePrice) {
-        this.productName = productName;
-        this.productPrice = productPrice;
+    public LineItem(Product product, int purchaseAmount) {
+        this.productName = product.getName();
+        this.productPrice = product.getPrice();
         this.purchaseAmount = purchaseAmount;
-        this.purchasePrice = purchasePrice;
+        purchasePrice = Double.parseDouble(productPrice) * purchaseAmount;
     }
 
     @Override
     public String toString() {
-        return productName + " \t " + productPrice + " \t " + purchaseAmount
-                + " \t " + purchasePrice;
+        String dollarPurchasePrice = String.format("$%.2f", purchasePrice);
+        return productName + " \t " + "$" + productPrice + " \t "
+                + purchaseAmount + " \t " + dollarPurchasePrice;
     }
 }
