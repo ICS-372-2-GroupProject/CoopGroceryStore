@@ -29,8 +29,8 @@ public abstract class DataTransfer {
     private Product orderedProduct;
     private int orderQuantity;
     private int purchaseAmount;
-    private String purchasePrice;
     private String purchaseTotal;
+    private String transactionMessage;
     private Transaction currentTransaction;
 
     /**
@@ -144,14 +144,6 @@ public abstract class DataTransfer {
         this.purchaseAmount = amountPurchased;
     }
 
-    public String getPurchasePrice() {
-        return purchasePrice;
-    }
-
-    public void setPurchasePrice(String purchasePrice) {
-        this.purchasePrice = purchasePrice;
-    }
-
     public String getPurchaseTotal() {
         return purchaseTotal;
     }
@@ -160,12 +152,20 @@ public abstract class DataTransfer {
         this.purchaseTotal = purchaseTotal;
     }
 
+    public String getTransactionMessage() {
+        return transactionMessage;
+    }
+
+    public void setTransactionMessage(String transactionMessage) {
+        this.transactionMessage = transactionMessage;
+    }
+
     public Transaction getCurrentTransaction() {
         return currentTransaction;
     }
 
-    public void setCurrentTransaction(Transaction currentTransaction) {
-        this.currentTransaction = currentTransaction;
+    public void setCurrentTransaction(Transaction newTransaction) {
+        this.currentTransaction = newTransaction;
     }
 
     /**

@@ -22,6 +22,7 @@ package business.entities;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -64,14 +65,13 @@ public class Transaction implements Serializable {
         }
 
         /**
-         * 
          * @return String with sale information in proper dollar format
          */
         @Override
         public String toString() {
-            String dollarPurchasePrice = String.format("$%.2f", purchasePrice);
-            return productName + " \t " + "$" + productPrice + " \t "
-                    + purchaseAmount + " \t " + dollarPurchasePrice;
+            String formatPurchasePrice = String.format("$%.2f", purchasePrice);
+            return productName + "\t\t$" + productPrice + "    "
+                    + purchaseAmount + "    " + formatPurchasePrice;
         }
     }
 
@@ -86,12 +86,12 @@ public class Transaction implements Serializable {
     /**
      * Adds a grocery item to the transaction.
      * 
-     * @param product        the product to be purchased
-     * @param purchaseAmount the amount of items being purchased
+     * @param itemForPurchase the product to be purchased
+     * @param purchaseAmount  the amount of items being purchased
      * @return String which displays sale information for line item
      */
-    public String addItem(Product product, int purchaseAmount) {
-        LineItem lineItem = new LineItem(product, purchaseAmount);
+    public String addItem(Product itemForPurchase, int purchaseAmount) {
+        LineItem lineItem = new LineItem(itemForPurchase, purchaseAmount);
         groceryItems.add(lineItem);
         purchaseTotal += lineItem.getPurchasePrice();
         return lineItem.toString();
@@ -127,12 +127,25 @@ public class Transaction implements Serializable {
                 + date.get(Calendar.YEAR);
     }
 
+    public Iterator<LineItem> getLineItems() {
+        return groceryItems.iterator();
+    }
+
+    public String buildReceipt() {
+        String receipt = "";
+        while (getLineItems().hasNext()) {
+            receipt += getLineItems().next().toString() + "\n";
+        }
+        receipt += "\t\t  TOTAL AMOUNT DUE: " + getPurchaseTotal();
+        return receipt;
+    }
+
     /**
      * 
      * @return String form of the transaction
      */
     @Override
     public String toString() {
-        return ("Transaction on: " + getDate());
+        return ("Transaction on: " + getDate() + "\n" + buildReceipt());
     }
 }

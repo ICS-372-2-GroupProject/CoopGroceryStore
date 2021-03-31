@@ -352,12 +352,36 @@ public class Store implements Serializable {
         return result;
     }
 
-    public Result checkOutItem(Request request) {
+    public Result beginTransaction(Request request) {
         Result result = new Result();
+        request.setCurrentTransaction(new Transaction());
+        result.setResultCode(Result.OPERATION_COMPLETED);
         return result;
     }
 
-    public Result beginTransaction(Request request) {
+    public Result checkOutItem(Request request) {
+        Result result = new Result();
+        Product product = inventory.search(request.getProductId());
+        int amount = request.getPurchaseAmount();
+        if (product == null) {
+            result.setResultCode(Result.PRODUCT_NOT_FOUND);
+            return result;
+        }
+        request.getCurrentTransaction().addItem(product, amount);
+        result.setResultCode(Result.OPERATION_COMPLETED);
+        result.setProductName(product.getName());
+        return result;
+    }
+
+    public Result displayPurchases(Request request) {
+        Result result = new Result();
+        String receipt = request.getCurrentTransaction().buildReceipt();
+        result.setResultCode(Result.OPERATION_COMPLETED);
+        result.setTransactionMessage(receipt);
+        return result;
+    }
+
+    public Result finalizeTransaction(Request request) {
         Result result = new Result();
         return result;
     }
