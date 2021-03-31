@@ -238,5 +238,4 @@ public class Member implements Serializable {
 	public static void retrieve(ObjectInputStream input) throws IOException, ClassNotFoundException {
 		idCounter = (int) input.readObject();
 	}
-	// >>>>>>>f432a89886cb6b6e1992efc20df25f031e6e9fdc
 }

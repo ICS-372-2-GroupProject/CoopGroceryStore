@@ -192,7 +192,9 @@ public class UserInterface {
 	 * 
 	 * @return array of Calendar that include begin and end dates.
 	 */
-	public Calendar[] getBeginAndEndDate(Calendar beginDate, Calendar endDate) {
+	public Calendar[] getBeginAndEndDate(Calendar beginDate_, Calendar endDate_) {
+		Calendar beginDate = beginDate_;
+		Calendar endDate = endDate_;
 		do {
 			try {
 				if (beginDate.after(endDate)) {
@@ -200,10 +202,14 @@ public class UserInterface {
 				}
 
 				return new Calendar[] { beginDate, endDate };
+
 			} catch (Exception fe) {
 				System.out.println("Please input a begin date before end date correctly!");
+				beginDate = getDate("Please enter the begin date for which you want records as mm/dd/yy");
+				endDate = getDate("Please enter the end date for which you want records as mm/dd/yy");
 			}
 		} while (true);
+
 	}
 
 	/**

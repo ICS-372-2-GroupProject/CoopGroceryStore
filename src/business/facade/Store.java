@@ -551,5 +551,5 @@ public class Store implements Serializable {
 	public String toString() {
 		return inventory + "\n" + members;
 	}
-	// >>>>>>>f432a89886cb6b6e1992efc20df25f031e6e9fdc
+
 }
