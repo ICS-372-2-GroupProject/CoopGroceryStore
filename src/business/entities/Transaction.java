@@ -1,4 +1,4 @@
-package business.collections;
+package business.entities;
 
 /**
  * 
@@ -25,8 +25,6 @@ import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
 
-import business.entities.Product;
-
 /**
  * Represents a record of items purchased by a member at checkout as a single
  * transaction. Only allows products to be added; transaction must be voided if
@@ -34,7 +32,6 @@ import business.entities.Product;
  * 
  * @author Nalongsone Danddank and G.D.Ponsness
  * @author (Modified from code written by Brahma Dathan and Sarnath Ramnath)
- *
  */
 
 public class Transaction implements Serializable {
@@ -43,6 +40,12 @@ public class Transaction implements Serializable {
     private double purchaseTotal;
     private List<LineItem> groceryItems = new LinkedList<LineItem>();
 
+    /**
+     * Helper class for Transaction. Stores relevant information for each
+     * product purchased.
+     * 
+     * @author G.D.Ponsness
+     */
     private class LineItem {
         private String productName;
         private String productPrice;
@@ -60,6 +63,10 @@ public class Transaction implements Serializable {
             return purchasePrice;
         }
 
+        /**
+         * 
+         * @return String with sale information in proper dollar format
+         */
         @Override
         public String toString() {
             String dollarPurchasePrice = String.format("$%.2f", purchasePrice);
@@ -69,7 +76,7 @@ public class Transaction implements Serializable {
     }
 
     /**
-     * 
+     * Initializes a new transaction.
      */
     public Transaction() {
         date = new GregorianCalendar();
@@ -77,10 +84,11 @@ public class Transaction implements Serializable {
     }
 
     /**
+     * Adds a grocery item to the transaction.
      * 
-     * @param product
-     * @param purchaseAmount
-     * @return
+     * @param product        the product to be purchased
+     * @param purchaseAmount the amount of items being purchased
+     * @return String which displays sale information for line item
      */
     public String addItem(Product product, int purchaseAmount) {
         LineItem lineItem = new LineItem(product, purchaseAmount);
@@ -90,32 +98,27 @@ public class Transaction implements Serializable {
     }
 
     /**
+     * Returns the transaction purchase total as a String
      * 
-     * @return
+     * @return purchaseTotal in proper dollar format
      */
     public String getPurchaseTotal() {
         return String.format("$%.2f", purchaseTotal);
     }
 
     /**
-     * Checks whether this transaction is on the given date
+     * Checks whether this transaction is between the given date range
      * 
-     * @param date The date for which transactions are being sought
-     * @return true iff the dates match
+     * @param beginDate lower bound for date range
+     * @param endDate   upper bound for date range
+     * @return true iff date is within range
      */
-    public boolean onDate(Calendar date) {
-        return ((date.get(Calendar.YEAR) == this.date.get(Calendar.YEAR))
-                && (date.get(Calendar.MONTH) == this.date.get(Calendar.MONTH))
-                && (date.get(Calendar.DATE) == this.date.get(Calendar.DATE)));
-    }
-
-    public boolean betweenTwoDate(Calendar beginDate, Calendar endDate) {
-
+    public boolean betweenDates(Calendar beginDate, Calendar endDate) {
         return this.date.after(beginDate) && this.date.before(endDate);
     }
 
     /**
-     * Returns the date as a String
+     * Returns the transaction date as a String
      * 
      * @return date with month, date, and year
      */
@@ -125,8 +128,8 @@ public class Transaction implements Serializable {
     }
 
     /**
-     * String form of the transaction
      * 
+     * @return String form of the transaction
      */
     @Override
     public String toString() {

@@ -3,9 +3,9 @@ package business.entities.iterators;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import business.collections.Transaction;
 import business.entities.Member;
 import business.entities.Product;
+import business.entities.Transaction;
 import business.entities.iterators.SafeIterator.Type.SafeMember;
 import business.entities.iterators.SafeIterator.Type.SafeProduct;
 import business.entities.iterators.SafeIterator.Type.SafeTransaction;

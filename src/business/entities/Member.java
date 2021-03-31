@@ -28,7 +28,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import business.collections.Transaction;
 import business.entities.iterators.FilteredTransactionIterator;
 
 /**
@@ -73,21 +72,10 @@ public class Member implements Serializable {
      * @param date the date for which the transactions have to be retrieved
      * @return the iterator to the collection
      */
-    public Iterator<Transaction> getTransactionsOnDate(Calendar date) {
+    public Iterator<Transaction> getTransactionsBetweenDates(Calendar beginDate,
+            Calendar endDate) {
         return new FilteredTransactionIterator(transactions.iterator(),
-                transaction -> transaction.onDate(date));
-    }
-
-    /**
-     * Gets an iterator to a collection of selected transactions
-     * 
-     * @param date the date for which the transactions have to be retrieved
-     * @return the iterator to the collection
-     */
-    public Iterator<Transaction> getTransactionsBetweenTwoDate(
-            Calendar beginDate, Calendar endDate) {
-        return new FilteredTransactionIterator(transactions.iterator(),
-                transaction -> transaction.betweenTwoDate(beginDate, endDate));
+                transaction -> transaction.betweenDates(beginDate, endDate));
     }
 
     /**

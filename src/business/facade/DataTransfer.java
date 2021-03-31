@@ -1,9 +1,9 @@
 package business.facade;
 
-import business.collections.Transaction;
 import business.entities.Member;
 import business.entities.Order;
 import business.entities.Product;
+import business.entities.Transaction;
 
 /**
  * The DataTransfer class is used to facilitate data transfer between Store and

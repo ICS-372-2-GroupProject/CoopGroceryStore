@@ -29,10 +29,10 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import business.collections.Transaction;
 import business.entities.Member;
 import business.entities.Order;
 import business.entities.Product;
+import business.entities.Transaction;
 import business.entities.iterators.FilteredOrderIterator;
 import business.entities.iterators.SafeIterator;
 
@@ -476,7 +476,7 @@ public class Store implements Serializable {
             return new LinkedList<Result>().iterator();
         }
         return new SafeIterator<Transaction>(
-                member.getTransactionsBetweenTwoDate(request.getBeginDate(),
+                member.getTransactionsBetweenDates(request.getBeginDate(),
                         request.getEndDate()),
                 SafeIterator.TRANSACTION);
 //		return member.getTransactionsBetweenTwoDate(request.getBeginDate(), request.getEndDate());
