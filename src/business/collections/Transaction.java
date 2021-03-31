@@ -22,40 +22,79 @@ package business.collections;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import business.entities.LineItem;
 import business.entities.Product;
 
 /**
  * Represents a record of items purchased by a member at checkout as a single
- * transaction.
+ * transaction. Only allows products to be added; transaction must be voided if
+ * input error occurs.
  * 
- * @author Nalongsone Danddank and G.D. Ponsness
+ * @author Nalongsone Danddank and G.D.Ponsness
+ * @author (Modified from code written by Brahma Dathan and Sarnath Ramnath)
  *
  */
 
-public class Transaction implements Iterable<LineItem>, Serializable {
+public class Transaction implements Serializable {
     private static final long serialVersionUID = 1L;
     private Calendar date;
-    private String purchaseTotal;
+    private double purchaseTotal;
     private List<LineItem> groceryItems = new LinkedList<LineItem>();
+
+    private class LineItem {
+        private String productName;
+        private String productPrice;
+        private int purchaseAmount;
+        private double purchasePrice;
+
+        public LineItem(Product product, int purchaseAmount) {
+            this.productName = product.getName();
+            this.productPrice = product.getPrice();
+            this.purchaseAmount = purchaseAmount;
+            purchasePrice = Double.parseDouble(productPrice) * purchaseAmount;
+        }
+
+        public double getPurchasePrice() {
+            return purchasePrice;
+        }
+
+        @Override
+        public String toString() {
+            String dollarPurchasePrice = String.format("$%.2f", purchasePrice);
+            return productName + " \t " + "$" + productPrice + " \t "
+                    + purchaseAmount + " \t " + dollarPurchasePrice;
+        }
+    }
 
     /**
      * 
      */
     public Transaction() {
         date = new GregorianCalendar();
+        purchaseTotal = 0;
     }
 
-    public void addItem(Product product, int purchaseAmount) {
-        groceryItems.add(new LineItem(product, purchaseAmount));
+    /**
+     * 
+     * @param product
+     * @param purchaseAmount
+     * @return
+     */
+    public String addItem(Product product, int purchaseAmount) {
+        LineItem lineItem = new LineItem(product, purchaseAmount);
+        groceryItems.add(lineItem);
+        purchaseTotal += lineItem.getPurchasePrice();
+        return lineItem.toString();
     }
 
-    public void calculateTotal() {
-
+    /**
+     * 
+     * @return
+     */
+    public String getPurchaseTotal() {
+        return String.format("$%.2f", purchaseTotal);
     }
 
     /**
@@ -83,15 +122,6 @@ public class Transaction implements Iterable<LineItem>, Serializable {
     public String getDate() {
         return date.get(Calendar.MONTH) + "/" + date.get(Calendar.DATE) + "/"
                 + date.get(Calendar.YEAR);
-    }
-
-    /**
-     * Returns an iterator to all products
-     * 
-     * @return iterator to the collection
-     */
-    public Iterator<LineItem> iterator() {
-        return groceryItems.iterator();
     }
 
     /**
