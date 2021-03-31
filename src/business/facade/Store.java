@@ -42,8 +42,9 @@ import business.entities.iterators.SafeIterator;
  * @author Brahma Dathan
  */
 public class Store implements Serializable {
+
 	private static final long serialVersionUID = 1L;
-	private ProductList products = new ProductList();
+	private Inventory inventory = new Inventory();
 	private MemberList members = new MemberList();
 	private OrderList orders = new OrderList();
 	private static Store store;
@@ -67,7 +68,7 @@ public class Store implements Serializable {
 	 * 
 	 * @author Brahma Dathan and Sarnath Ramnath
 	 */
-	private class ProductList implements Iterable<Product>, Serializable {
+	private class Inventory implements Iterable<Product>, Serializable {
 		private static final long serialVersionUID = 1L;
 		private List<Product> products = new LinkedList<Product>();
 
@@ -286,19 +287,25 @@ public class Store implements Serializable {
 	 */
 	public Result addProduct(Request request) {
 		Result result = new Result();
-		Product product = new Product(request.getProductName(), request.getProductId(), request.getProductPrice(),
-				request.getProductReorderLevel(), request.getProductStockOnHand());
-		Product checkExists = products.search(request.getProductId());
+		Product checkExists = inventory.search(request.getProductId());
 		if (checkExists != null) {
 			result.setResultCode(Result.PRODUCT_EXISTS);
 			return result;
 		}
-		checkExists = products.searchName(request.getProductName());
+		checkExists = inventory.searchName(request.getProductName());
 		if (checkExists != null) {
 			result.setResultCode(Result.NAME_IN_USE);
 			return result;
 		}
-		if (products.insertProduct(product)) {
+		try {
+			Double.parseDouble(request.getProductPrice());
+		} catch (Error NumberExceptionError) {
+			result.setResultCode(Result.NOT_DECIMAL);
+			return result;
+		}
+		Product product = new Product(request.getProductName(), request.getProductId(), request.getProductPrice(),
+				request.getProductReorderLevel(), request.getProductStockOnHand());
+		if (inventory.insertProduct(product)) {
 			result.setResultCode(Result.OPERATION_COMPLETED);
 			result.setProductFields(product);
 			Order newOrder = new Order(product, request.getProductReorderLevel() * 2);
@@ -324,7 +331,7 @@ public class Store implements Serializable {
 			result.setResultCode(Result.NOT_DECIMAL);
 			return result;
 		}
-		Product product = products.search(request.getProductId());
+		Product product = inventory.search(request.getProductId());
 		if (product == null) {
 			result.setResultCode(Result.PRODUCT_NOT_FOUND);
 			return result;
@@ -332,6 +339,16 @@ public class Store implements Serializable {
 		product.setPrice(request.getProductPrice());
 		result.setResultCode(Result.OPERATION_COMPLETED);
 		result.setProductFields(product);
+		return result;
+	}
+
+	public Result checkOutItem(Request request) {
+		Result result = new Result();
+		return result;
+	}
+
+	public Result beginTransaction(Request request) {
+		Result result = new Result();
 		return result;
 	}
 
@@ -419,7 +436,7 @@ public class Store implements Serializable {
 		}
 		result.setOrderFields(order);
 		Request.instance().setProductId(order.getProductOrdered().getId());
-		Product product = products.search(request.getProductId());
+		Product product = inventory.search(request.getProductId());
 		if (product == null) {
 			result.setResultCode(Result.PRODUCT_NOT_FOUND);
 			return result;
@@ -435,8 +452,9 @@ public class Store implements Serializable {
 	 * Returns an iterator to the transactions for a specific member on a certain
 	 * date
 	 * 
-	 * @param memberId member id
-	 * @param date     date of issue
+	 * @param memberId  member id
+	 * @param BeginDate date of issue
+	 * @param EndDate   date of issue
 	 * @return iterator to the collection
 	 */
 	public Iterator<Transaction> getTransactions(Request request) {
@@ -523,7 +541,7 @@ public class Store implements Serializable {
 	 * @return an Iterator to Result - only the Product fields are valid.
 	 */
 	public Iterator<Result> getProduct() {
-		return new SafeIterator<Product>(products.iterator(), SafeIterator.PRODUCT);
+		return new SafeIterator<Product>(inventory.iterator(), SafeIterator.PRODUCT);
 	}
 
 	/**
@@ -531,6 +549,7 @@ public class Store implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		return products + "\n" + members;
+		return inventory + "\n" + members;
 	}
+	// >>>>>>>f432a89886cb6b6e1992efc20df25f031e6e9fdc
 }

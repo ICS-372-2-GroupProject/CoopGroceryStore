@@ -117,6 +117,13 @@ public class Order implements Serializable {
         return result;
     }
 
+    /**
+     * Checks whether the order is equal to the one supplied
+     * 
+     * @param object the order who should be compared
+     * @return true iff the order ids match
+     */
+
     @Override
     public boolean equals(Object object) {
         if (this == object) {

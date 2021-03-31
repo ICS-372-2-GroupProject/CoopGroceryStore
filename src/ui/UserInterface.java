@@ -282,6 +282,10 @@ public class UserInterface {
 		case Result.NAME_IN_USE:
 			System.out.println("Product with name " + Request.instance().getProductName() + " already exists");
 			break;
+		case Result.NOT_DECIMAL:
+			System.out
+					.println("Price " + Request.instance().getProductPrice() + " cannot be converted to dollar value");
+			break;
 		case Result.OPERATION_FAILED:
 			System.out.println("Product failed to be added");
 			break;
@@ -325,8 +329,39 @@ public class UserInterface {
 	 * @author G.D. Ponsness
 	 * 
 	 */
-	public void checkoutItems() {
-
+	public void checkOutItems() {
+		Request.instance().setMemberId(getToken("Enter member id"));
+		Result result = store.searchMembership(Request.instance());
+		switch (result.getResultCode()) {
+		case Result.NO_SUCH_MEMBER:
+			System.out.println("No member with id " + Request.instance().getMemberId());
+			break;
+		case Result.OPERATION_COMPLETED:
+			result = store.beginTransaction(Request.instance());
+			do {
+				Request.instance().setProductId(getToken("Enter product id"));
+				switch (result.getResultCode()) {
+				case Result.PRODUCT_NOT_FOUND:
+					System.out.println("No product with id " + Request.instance().getProductId());
+					break;
+				case Result.OPERATION_COMPLETED:
+					Request.instance().setPurchaseAmount(getNumber("Enter amount purchased"));
+					result = store.checkOutItem(Request.instance());
+					if (result.getResultCode() == Result.OPERATION_COMPLETED) {
+						System.out.println("");
+					} else {
+						System.out.println("Product could not be sold");
+					}
+					break;
+				default:
+					System.out.println("Product could not be found");
+				}
+			} while (yesOrNo("Check out another item?"));
+			// More code
+			break;
+		default:
+			System.out.println("Member could not be found");
+		}
 	}
 
 	/**
@@ -542,7 +577,7 @@ public class UserInterface {
 				addProduct();
 				break;
 			case CHECK_OUT_ITEMS:
-				checkoutItems();
+				checkOutItems();
 				break;
 			case PROCESS_SHIPMENT:
 				processShipment();
