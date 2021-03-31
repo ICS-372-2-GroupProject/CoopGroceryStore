@@ -47,7 +47,7 @@ public class AutomatedTester {
     /**
      * Tests Member creation.
      */
-    public void testAddMember() {
+	public void testEnrollMember() {
         for (int count = 0; count < members.length; count++) {
             Request.instance().setMemberName(memberNames[count]);
             Request.instance().setMemberAddress(addresses[count]);
@@ -63,9 +63,29 @@ public class AutomatedTester {
     }
 
     /**
-     * Test addProduct
-     */
+	 * Tests Member Removal.
+	 */
+	public void testRemoveMember() {
+		Request.instance().setMemberName("Member Beingremoved");
+		Request.instance().setMemberAddress("34567 Removed Ave");
+		Request.instance().setMemberPhone("555-5555");
+		Request.instance().setMemberDateJoined("01-JAN-1999");
+		Request.instance().setMemberFee("20");
+		// Check that member to remove was successfully added
+		Result result = Store.instance().enrollMember(Request.instance());
+		assert result.getResultCode() == Result.OPERATION_COMPLETED;
+		assert result.getMemberName().equals("Member Beingremoved");
+		assert result.getMemberPhone().equals("555-5555");
+		Request.instance().setMemberId(result.getMemberId());
+		result = Store.instance().removeMember(Request.instance());
+		assert result.getResultCode() == Result.OPERATION_COMPLETED : result.getResultCode();
+		result = Store.instance().removeMember(Request.instance());
+		assert result.getResultCode() == Result.NO_SUCH_MEMBER : result.getResultCode();
+	}
 
+	/**
+	 * Test addProduct
+	 */
     public void testAddProduct() {
         for (int count = 0; count < products.length; count++) {
             Request.instance().setProductName(productName[count]);
@@ -127,7 +147,8 @@ public class AutomatedTester {
      * Store.instance().searchMembership(Request.instance()) == null; }
      */
     public void testAll() {
-        testAddMember();
+		testEnrollMember();
+		testRemoveMember();
         testAddProduct();
         // testSearchMembership();
         // testProcessShipment();
