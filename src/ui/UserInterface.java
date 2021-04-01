@@ -162,6 +162,24 @@ public class UserInterface {
         } while (true);
     }
 
+	/**
+	 * Converts the string to a decimal number
+	 * 
+	 * @param prompt the string for prompting
+	 * @return the decimal corresponding to the string
+	 */
+	public String getDecimal(String prompt) {
+		do {
+			try {
+				String item = getToken(prompt);
+				Double number = Double.valueOf(item);
+				return item;
+			} catch (NumberFormatException nfe) {
+				System.out.println("Please input a decimal number");
+			}
+		} while (true);
+	}
+
     /**
      * Prompts for a date and gets a date object
      * 
@@ -292,7 +310,7 @@ public class UserInterface {
         Request.instance().setProductId(getToken("Enter Product id"));
         Request.instance()
                 .setProductStockOnHand(getNumber("Enter Stock on Hand"));
-        Request.instance().setProductPrice(getName("Enter Current Price"));
+		Request.instance().setProductPrice(getDecimal("Enter Current Price"));
         Request.instance()
                 .setProductReorderLevel(getNumber("Enter Reorder Level"));
         Result result = store.addProduct(Request.instance());
@@ -304,10 +322,6 @@ public class UserInterface {
         case Result.NAME_IN_USE:
             System.out.println("Product with name "
                     + Request.instance().getProductName() + " already exists");
-            break;
-        case Result.NOT_DECIMAL:
-            System.out.println("Price " + Request.instance().getProductPrice()
-                    + " cannot be converted to dollar value");
             break;
         case Result.OPERATION_FAILED:
             System.out.println("Product failed to be added");
