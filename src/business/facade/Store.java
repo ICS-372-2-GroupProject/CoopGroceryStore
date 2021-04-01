@@ -305,8 +305,10 @@ public class Store implements Serializable {
             return result;
         }
         try {
+            System.out.println("in");
             Double.parseDouble(request.getProductPrice());
-        } catch (Error NumberExceptionError) {
+            System.out.println("out");
+        } catch (NumberFormatException error) {
             result.setResultCode(Result.NOT_DECIMAL);
             return result;
         }
