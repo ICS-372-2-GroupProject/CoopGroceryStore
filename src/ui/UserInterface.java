@@ -162,23 +162,23 @@ public class UserInterface {
         } while (true);
     }
 
-	/**
-	 * Converts the string to a decimal number
-	 * 
-	 * @param prompt the string for prompting
-	 * @return the decimal corresponding to the string
-	 */
-	public String getDecimal(String prompt) {
-		do {
-			try {
-				String item = getToken(prompt);
-				Double number = Double.valueOf(item);
-				return item;
-			} catch (NumberFormatException nfe) {
-				System.out.println("Please input a decimal number");
-			}
-		} while (true);
-	}
+    /**
+     * Converts the string to a decimal number
+     * 
+     * @param prompt the string for prompting
+     * @return the decimal corresponding to the string
+     */
+    public String getDecimalForm(String prompt) {
+        do {
+            try {
+                String item = getToken(prompt);
+                Double number = Double.valueOf(item);
+                return item;
+            } catch (NumberFormatException nfe) {
+                System.out.println("Please input a decimal number");
+            }
+        } while (true);
+    }
 
     /**
      * Prompts for a date and gets a date object
@@ -310,7 +310,7 @@ public class UserInterface {
         Request.instance().setProductId(getToken("Enter Product id"));
         Request.instance()
                 .setProductStockOnHand(getNumber("Enter Stock on Hand"));
-		Request.instance().setProductPrice(getDecimal("Enter Current Price"));
+        Request.instance().setProductPrice(getDecimalForm("Enter Current Price"));
         Request.instance()
                 .setProductReorderLevel(getNumber("Enter Reorder Level"));
         Result result = store.addProduct(Request.instance());
@@ -342,16 +342,12 @@ public class UserInterface {
      */
     public void changePrice() {
         Request.instance().setProductId(getToken("Enter product id"));
-        Request.instance().setProductPrice(getToken("Enter new price"));
+        Request.instance().setProductPrice(getDecimalForm("Enter new price"));
         Result result = store.changePrice(Request.instance());
         switch (result.getResultCode()) {
         case Result.PRODUCT_NOT_FOUND:
             System.out.println("Product with id "
                     + Request.instance().getProductId() + " cannot be found");
-            break;
-        case Result.NOT_DECIMAL:
-            System.out.println("Price " + Request.instance().getProductPrice()
-                    + " cannot be converted to dollar value");
             break;
         case Result.OPERATION_COMPLETED:
             System.out.println("Price changed. \n" + result.getProductName()

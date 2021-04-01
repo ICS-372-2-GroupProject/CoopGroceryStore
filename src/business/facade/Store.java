@@ -304,14 +304,6 @@ public class Store implements Serializable {
             result.setResultCode(Result.NAME_IN_USE);
             return result;
         }
-        try {
-            System.out.println("in");
-            Double.parseDouble(request.getProductPrice());
-            System.out.println("out");
-        } catch (NumberFormatException error) {
-            result.setResultCode(Result.NOT_DECIMAL);
-            return result;
-        }
         Product product = new Product(request.getProductName(),
                 request.getProductId(), request.getProductPrice(),
                 request.getProductReorderLevel(),
@@ -337,12 +329,6 @@ public class Store implements Serializable {
      */
     public Result changePrice(Request request) {
         Result result = new Result();
-        try {
-            Double.parseDouble(request.getProductPrice());
-        } catch (Error NumberExceptionError) {
-            result.setResultCode(Result.NOT_DECIMAL);
-            return result;
-        }
         Product product = inventory.search(request.getProductId());
         if (product == null) {
             result.setResultCode(Result.PRODUCT_NOT_FOUND);

@@ -19,7 +19,6 @@ public class Result extends DataTransfer {
     public static final int NO_SUCH_MEMBER = 6;
     public static final int PRODUCT_EXISTS = 7;
     public static final int NAME_IN_USE = 8;
-    public static final int NOT_DECIMAL = 9;
 
     private int resultCode;
 
