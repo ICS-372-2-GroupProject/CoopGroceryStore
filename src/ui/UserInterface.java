@@ -92,7 +92,8 @@ public class UserInterface {
 	/**
 	 * Gets a token after prompting
 	 * 
-	 * @param prompt - whatever the user wants as prompt
+	 * @param prompt
+	 *            - whatever the user wants as prompt
 	 * @return - the token from the keyboard
 	 */
 	public String getToken(String prompt) {
@@ -113,7 +114,8 @@ public class UserInterface {
 	/**
 	 * Gets a name after prompting
 	 * 
-	 * @param prompt - whatever the user wants as prompt
+	 * @param prompt
+	 *            - whatever the user wants as prompt
 	 * @return - the token from the keyboard
 	 */
 	public String getName(String prompt) {
@@ -132,7 +134,8 @@ public class UserInterface {
 	/**
 	 * Queries for a yes or no and returns true for yes and false for no
 	 * 
-	 * @param prompt The string to be prepended to the yes/no prompt
+	 * @param prompt
+	 *            The string to be prepended to the yes/no prompt
 	 * @return true for yes and false for no
 	 */
 	private boolean yesOrNo(String prompt) {
@@ -146,7 +149,8 @@ public class UserInterface {
 	/**
 	 * Converts the string to a number
 	 * 
-	 * @param prompt the string for prompting
+	 * @param prompt
+	 *            the string for prompting
 	 * @return the integer corresponding to the string
 	 */
 	public int getNumber(String prompt) {
@@ -164,7 +168,8 @@ public class UserInterface {
 	/**
 	 * Converts the string to a decimal number
 	 * 
-	 * @param prompt the string for prompting
+	 * @param prompt
+	 *            the string for prompting
 	 * @return the decimal corresponding to the string
 	 */
 	public String getDecimalForm(String prompt) {
@@ -183,7 +188,8 @@ public class UserInterface {
 	 * Prompts for a date and gets a date object
 	 * 
 	 * 
-	 * @param prompt the prompt
+	 * @param prompt
+	 *            the prompt
 	 * 
 	 * @return the data as a Calendar object
 	 */
@@ -204,8 +210,10 @@ public class UserInterface {
 	/**
 	 * Prompts for get Begin And End Date.
 	 * 
-	 * @param beginDate - Calendar
-	 * @param endDate   - Calendar
+	 * @param beginDate
+	 *            - Calendar
+	 * @param endDate
+	 *            - Calendar
 	 * 
 	 * @return array of Calendar that include begin and end dates.
 	 */
@@ -261,7 +269,7 @@ public class UserInterface {
 		System.out.println(CHANGE_PRICE + " to change the price of a product");
 		System.out.println(RETRIEVE_PRODUCT_INFO + " to list details of a product");
 		System.out.println(RETRIEVE_MEMBER_INFO + " to list details of a member");
-		System.out.println(GET_TRANSACTIONS + "  to print all transactions of product.");
+		System.out.println(GET_TRANSACTIONS + " to print all transactions of product");
 		System.out.println(GET_OUTSTANDING_ORDERS + " to print all outstanding orders");
 		System.out.println(GET_MEMBERS + " to print all members");
 		System.out.println(GET_PRODUCT + " to print all product");
@@ -483,6 +491,8 @@ public class UserInterface {
 	 */
 	public void getOutstandingOrders() {
 		Iterator<Order> result = store.getOutstandingOrders();
+		System.out.println("List of Outstanding Orders");
+		System.out.println("(Order Number, Product Name, Order Date/Time, Quantity Ordered)");
 		while (result.hasNext()) {
 			Order order = (Order) result.next();
 			System.out.println(order.getId() + ", " + order.getProductOrdered().getName() + ", "
@@ -637,7 +647,8 @@ public class UserInterface {
 	/**
 	 * The method to start the application. Simply calls process().
 	 * 
-	 * @param args not used
+	 * @param args
+	 *            not used
 	 */
 	public static void main(String[] args) {
 		UserInterface.instance().process();
