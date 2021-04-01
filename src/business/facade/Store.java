@@ -379,11 +379,16 @@ public class Store implements Serializable {
         Result result = new Result();
         String receipt = request.getCurrentTransaction().buildReceipt();
         result.setResultCode(Result.OPERATION_COMPLETED);
-        result.setTransactionMessage(receipt);
+        result.setTransactionResult(receipt);
         return result;
     }
 
     public Result finalizeTransaction(Request request) {
+        Result result = new Result();
+        return result;
+    }
+
+    private Result adjustInventory(Request request, Iterator iterator) {
         Result result = new Result();
         return result;
     }

@@ -30,7 +30,7 @@ public abstract class DataTransfer {
     private int orderQuantity;
     private int purchaseAmount;
     private String purchaseTotal;
-    private String transactionMessage;
+    private String transactionResult;
     private Transaction currentTransaction;
 
     /**
@@ -152,12 +152,12 @@ public abstract class DataTransfer {
         this.purchaseTotal = purchaseTotal;
     }
 
-    public String getTransactionMessage() {
-        return transactionMessage;
+    public String getTransactionResult() {
+        return transactionResult;
     }
 
-    public void setTransactionMessage(String transactionMessage) {
-        this.transactionMessage = transactionMessage;
+    public void setTransactionResult(String transactionResult) {
+        this.transactionResult = transactionResult;
     }
 
     public Transaction getCurrentTransaction() {

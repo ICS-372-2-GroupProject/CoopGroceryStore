@@ -382,12 +382,15 @@ public class UserInterface {
             }
         } while (yesOrNo("Check out another item?"));
         result = store.displayPurchases(Request.instance());
-        System.out.println(result.getTransactionMessage());
-        if (yesOrNo("Has the member paid total amount due (with cash)? \n")) {
-            result = store.finalizeTransaction(Request.instance());
+        System.out.println(result.getTransactionResult());
+        if (!yesOrNo("Has the member paid total amount due (with cash)? \n")) {
+            // TODO code for no cash payment
+            return;
         }
+        do {
+            result = store.finalizeTransaction(Request.instance());
 
-        // More code
+        } while (result.getResultCode() != Result.OPERATION_COMPLETED);
     }
 
     /**
