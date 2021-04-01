@@ -310,7 +310,8 @@ public class UserInterface {
         Request.instance().setProductId(getToken("Enter Product id"));
         Request.instance()
                 .setProductStockOnHand(getNumber("Enter Stock on Hand"));
-        Request.instance().setProductPrice(getDecimalForm("Enter Current Price"));
+        Request.instance()
+                .setProductPrice(getDecimalForm("Enter Current Price"));
         Request.instance()
                 .setProductReorderLevel(getNumber("Enter Reorder Level"));
         Result result = store.addProduct(Request.instance());
@@ -397,10 +398,8 @@ public class UserInterface {
             // TODO code for no cash payment
             return;
         }
-        do {
-            result = store.finalizeTransaction(Request.instance());
-
-        } while (result.getResultCode() != Result.OPERATION_COMPLETED);
+        result = store.finalizeTransaction(Request.instance());
+        System.out.println(result.getTransactionResult());
     }
 
     /**

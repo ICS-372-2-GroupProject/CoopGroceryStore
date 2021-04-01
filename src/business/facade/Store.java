@@ -33,6 +33,7 @@ import business.entities.Member;
 import business.entities.Order;
 import business.entities.Product;
 import business.entities.Transaction;
+import business.entities.helpers.LineItem;
 import business.entities.iterators.FilteredOrderIterator;
 import business.entities.iterators.SafeIterator;
 
@@ -371,13 +372,29 @@ public class Store implements Serializable {
 
     public Result finalizeTransaction(Request request) {
         Result result = new Result();
-
+        String ordersPlaced = "";
+        Transaction transaction = request.getCurrentTransaction();
+        Iterator<LineItem> lineItems = transaction.getLineItems();
+        while (lineItems.hasNext()) {
+            ordersPlaced = adjustInventory(lineItems.next(), ordersPlaced);
+        }
+        result.setResultCode(Result.OPERATION_COMPLETED);
+        result.setTransactionResult(ordersPlaced);
         return result;
     }
 
-    private Result adjustInventory(Request request, Iterator iterator) {
-        Result result = new Result();
-        return result;
+    private String adjustInventory(LineItem lineItem, String ordersPlaced) {
+        Product product = lineItem.getProduct();
+        int newStock = product.getStockOnHand() - lineItem.getPurchaseAmount();
+        if (newStock <= product.getReorderLevel()) {
+            int reorderAmount = product.getReorderLevel() * 2;
+            Order reorder = new Order(product, reorderAmount);
+            orders.insertOrder(reorder); // boolean check
+            ordersPlaced += String.format(
+                    "%d items have been ordered for %s. (Order id: %s)\n",
+                    reorderAmount, product.getName(), reorder.getId());
+        }
+        return ordersPlaced;
     }
 
     /**

@@ -102,6 +102,24 @@ public class AutomatedTester {
         }
     }
 
+    public void testCheckOutItems() {
+        Request.instance().setMemberId("M1");
+        Result result = Store.instance().searchMembership(Request.instance());
+        assert result.getResultCode() == Result.OPERATION_COMPLETED;
+        result = Store.instance().beginTransaction(Request.instance());
+        assert result.getResultCode() == Result.OPERATION_COMPLETED;
+        for (int index = 0; index < 3; index++) {
+            Request.instance().setProductId(productId[index]);
+            Request.instance().setPurchaseAmount(6);
+            result = Store.instance().checkOutItem(Request.instance());
+            assert result.getResultCode() == Result.OPERATION_COMPLETED;
+        }
+        result = Store.instance().displayPurchases(Request.instance());
+        assert result.getResultCode() == Result.OPERATION_COMPLETED;
+        result = Store.instance().finalizeTransaction(Request.instance());
+        assert result.getResultCode() == Result.OPERATION_COMPLETED;
+    }
+
     public void testProcessShipment() {
         Request.instance().setOrderId("O1");
         Result result = Store.instance().processShipment(Request.instance());
@@ -152,6 +170,7 @@ public class AutomatedTester {
         testEnrollMember();
         testRemoveMember();
         testAddProduct();
+        testCheckOutItems();
         // testSearchMembership();
         // testProcessShipment();
         // testGetTransactions();

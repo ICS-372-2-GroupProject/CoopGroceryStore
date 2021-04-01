@@ -100,7 +100,7 @@ public class Transaction implements Serializable {
     }
 
     public String buildReceipt() {
-        Iterator<LineItem> iterator = groceryItems.iterator();
+        Iterator<LineItem> iterator = getLineItems();
         String receipt = "";
         while (iterator.hasNext()) {
             receipt += iterator.next().toString() + "\n";

@@ -10,16 +10,22 @@ import business.entities.Product;
  */
 
 public class LineItem {
-    private String productName;
-    private String productPrice;
+    private Product product;
     private int purchaseAmount;
     private double purchasePrice;
 
     public LineItem(Product product, int purchaseAmount) {
-        this.productName = product.getName();
-        this.productPrice = product.getPrice();
+        this.product = product;
         this.purchaseAmount = purchaseAmount;
-        purchasePrice = Double.parseDouble(productPrice) * purchaseAmount;
+        purchasePrice = Double.parseDouble(product.getPrice()) * purchaseAmount;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public int getPurchaseAmount() {
+        return purchaseAmount;
     }
 
     public double getPurchasePrice() {
@@ -32,7 +38,7 @@ public class LineItem {
     @Override
     public String toString() {
         String formatPurchasePrice = String.format("$%.2f", purchasePrice);
-        return productName + "\t\t$" + productPrice + "    " + purchaseAmount
-                + "    " + formatPurchasePrice;
+        return product.getName() + "\t\t$" + product.getPrice() + "    "
+                + purchaseAmount + "    " + formatPurchasePrice;
     }
 }
