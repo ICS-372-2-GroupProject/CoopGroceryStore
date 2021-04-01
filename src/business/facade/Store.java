@@ -371,6 +371,7 @@ public class Store implements Serializable {
 
     public Result finalizeTransaction(Request request) {
         Result result = new Result();
+
         return result;
     }
 
