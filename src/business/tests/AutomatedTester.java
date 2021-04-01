@@ -116,7 +116,7 @@ public class AutomatedTester {
 		Request.instance().setOrderId("O20");
 		result = Store.instance().processShipment(Request.instance());
 		assert result.getResultCode() == Result.OPERATION_COMPLETED;
-		Request.instance().setOrderId("O21");
+		Request.instance().setOrderId("O200");
 		result = Store.instance().processShipment(Request.instance());
 		assert result.getResultCode() == Result.NO_ORDER_FOUND;
 	}
@@ -126,24 +126,24 @@ public class AutomatedTester {
 		beginDate.set(2012, Calendar.JULY, 1, 0, 0, 0);
 
 		Calendar endDate = Calendar.getInstance();
-//		Request.instance().setMemberName(memberNames[0]);
-//		Request.instance().setMemberAddress(addresses[0]);
-//		Request.instance().setMemberPhone(phones[0]);
-//		Request.instance().setMemberDateJoined(dateJoined[0]);
-//		Request.instance().setMemberFee(fee[0]);
-//		endDate.set(2020, Calendar.JULY, 1, 0, 0, 0);
-//		members[0] = 
+		// Request.instance().setMemberName(memberNames[0]);
+		// Request.instance().setMemberAddress(addresses[0]);
+		// Request.instance().setMemberPhone(phones[0]);
+		// Request.instance().setMemberDateJoined(dateJoined[0]);
+		// Request.instance().setMemberFee(fee[0]);
+		// endDate.set(2020, Calendar.JULY, 1, 0, 0, 0);
+		// members[0] =
 		Request.instance().setMemberId("M1");
 		Request.instance().setBeginDate(beginDate);
 		Request.instance().setEndDate(endDate);
-//        Iterator<Result> results = Store.instance()
-//                .getTransactions(Request.instance());
-//		while (results.hasNext()) {
-//			Result result = (Result) results.next();
-//			// TODO: Transactions do not have types or titles.
-//			// System.out.println(result.getCurrentTransaction().getType() + " "
-//			// + result.getCurrentTransaction().getTitle() + "\n");
-//		}
+		// Iterator<Result> results = Store.instance()
+		// .getTransactions(Request.instance());
+		// while (results.hasNext()) {
+		// Result result = (Result) results.next();
+		// // TODO: Transactions do not have types or titles.
+		// // System.out.println(result.getCurrentTransaction().getType() + " "
+		// // + result.getCurrentTransaction().getTitle() + "\n");
+		// }
 
 	}
 
@@ -159,7 +159,7 @@ public class AutomatedTester {
 		testAddProduct();
 		testCheckOutItems();
 		// testSearchMembership();
-		// testProcessShipment();
+		testProcessShipment();
 		// testGetTransactions();
 	}
 
