@@ -26,6 +26,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import business.entities.helpers.LineItem;
+
 /**
  * Represents a record of items purchased by a member at checkout as a single
  * transaction. Only allows products to be added; transaction must be voided if
@@ -40,40 +42,6 @@ public class Transaction implements Serializable {
     private Calendar date;
     private double purchaseTotal;
     private List<LineItem> groceryItems = new LinkedList<LineItem>();
-
-    /**
-     * Helper class for Transaction. Stores relevant information for each
-     * product purchased.
-     * 
-     * @author G.D.Ponsness
-     */
-    private class LineItem {
-        private String productName;
-        private String productPrice;
-        private int purchaseAmount;
-        private double purchasePrice;
-
-        public LineItem(Product product, int purchaseAmount) {
-            this.productName = product.getName();
-            this.productPrice = product.getPrice();
-            this.purchaseAmount = purchaseAmount;
-            purchasePrice = Double.parseDouble(productPrice) * purchaseAmount;
-        }
-
-        public double getPurchasePrice() {
-            return purchasePrice;
-        }
-
-        /**
-         * @return String with sale information in proper dollar format
-         */
-        @Override
-        public String toString() {
-            String formatPurchasePrice = String.format("$%.2f", purchasePrice);
-            return productName + "\t\t$" + productPrice + "    "
-                    + purchaseAmount + "    " + formatPurchasePrice;
-        }
-    }
 
     /**
      * Initializes a new transaction.
