@@ -29,6 +29,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import business.entities.iterators.FilteredTransactionIterator;
+import business.facade.Request;
 
 /**
  * Member represents a member of the Coop.
@@ -87,6 +88,10 @@ public class Member implements Serializable {
 	 */
 	public Iterator<Transaction> getTransactions() {
 		return transactions.iterator();
+	}
+
+	public boolean addTransaction(Request request) {
+		return transactions.add(request.getCurrentTransaction());
 	}
 
 	/**
@@ -231,4 +236,5 @@ public class Member implements Serializable {
 	public static void retrieve(ObjectInputStream input) throws IOException, ClassNotFoundException {
 		idCounter = (int) input.readObject();
 	}
+
 }

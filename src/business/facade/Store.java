@@ -347,9 +347,17 @@ public class Store implements Serializable {
 			return result;
 		}
 		request.getCurrentTransaction().addItem(product, amount);
+		setTransactionToMember(request);
 		result.setResultCode(Result.OPERATION_COMPLETED);
 		result.setProductName(product.getName());
 		return result;
+	}
+
+	public void setTransactionToMember(Request request) {
+		Member member = members.search(request.getMemberId());
+		if (!member.addTransaction(request)) {
+			System.out.println("Fail add transaction to memberID: " + request.getMemberId());
+		}
 	}
 
 	public Result displayPurchases(Request request) {
