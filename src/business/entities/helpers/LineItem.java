@@ -1,5 +1,7 @@
 package business.entities.helpers;
 
+import java.io.Serializable;
+
 import business.entities.Product;
 
 /**
@@ -9,36 +11,37 @@ import business.entities.Product;
  * @author G.D.Ponsness
  */
 
-public class LineItem {
-    private Product product;
-    private int purchaseAmount;
-    private double purchasePrice;
+public class LineItem implements Serializable {
+	private static final long serialVersionUID = 1L;
+	private Product product;
+	private int purchaseAmount;
+	private double purchasePrice;
 
-    public LineItem(Product product, int purchaseAmount) {
-        this.product = product;
-        this.purchaseAmount = purchaseAmount;
-        purchasePrice = Double.parseDouble(product.getPrice()) * purchaseAmount;
-    }
+	public LineItem(Product product, int purchaseAmount) {
+		this.product = product;
+		this.purchaseAmount = purchaseAmount;
+		purchasePrice = Double.parseDouble(product.getPrice()) * purchaseAmount;
+	}
 
-    public Product getProduct() {
-        return product;
-    }
+	public Product getProduct() {
+		return product;
+	}
 
-    public int getPurchaseAmount() {
-        return purchaseAmount;
-    }
+	public int getPurchaseAmount() {
+		return purchaseAmount;
+	}
 
-    public double getPurchasePrice() {
-        return purchasePrice;
-    }
+	public double getPurchasePrice() {
+		return purchasePrice;
+	}
 
-    /**
-     * @return String with sale information in proper dollar format
-     */
-    @Override
-    public String toString() {
-        String formatPurchasePrice = String.format("$%.2f", purchasePrice);
-        return product.getName() + "\t\t$" + product.getPrice() + "    "
-                + purchaseAmount + "    " + formatPurchasePrice;
-    }
+	/**
+	 * @return String with sale information in proper dollar format
+	 */
+	@Override
+	public String toString() {
+		String formatPurchasePrice = String.format("$%.2f", purchasePrice);
+		return product.getName() + "\t\t$" + product.getPrice() + "    " + purchaseAmount + "    "
+				+ formatPurchasePrice;
+	}
 }
