@@ -163,7 +163,6 @@ public class AutomatedTester {
 		assert Request.instance().getProductPrice().equals("6.00");
 		Result result = Store.instance().changePrice(Request.instance());
 		assert result.getResultCode() == Result.OPERATION_COMPLETED;
-
 		Request.instance().setProductId("P50");
 		result = Store.instance().changePrice(Request.instance());
 		assert result.getResultCode() == Result.PRODUCT_NOT_FOUND;
@@ -211,7 +210,7 @@ public class AutomatedTester {
 		testCheckOutItems();
 		// testSearchMembership();
 		testProcessShipment();
-		// testChangePrice();
+		testChangePrice();
 		testGetTransactions();
 	}
 
