@@ -575,16 +575,32 @@ public class UserInterface {
     public void getMembers() {
         Iterator<Result> iterator = store.getMembers();
         System.out.println("List of members\n"
-                + "(Member Name, address, phone, date joined, fee paid, Member Id)");
+				+ padString("Member Name", 20) + padString("address", 20) + padString("phone", 12)
+				+ padString("date joined", 30) + padString("fee", 5) + padString("Member Id", 10));
         while (iterator.hasNext()) {
             Result result = iterator.next();
-            System.out.println(result.getMemberName() + "\t"
-                    + result.getMemberAddress() + "\t" + result.getMemberPhone()
-                    + " " + result.getMemberDateJoined() + "\t"
-                    + result.getMemberFee() + "\t" + result.getMemberId());
+			System.out.println(padString(result.getMemberName(), 20) + padString(result.getMemberAddress(), 20)
+					+ padString(result.getMemberPhone(), 12) + padString(result.getMemberDateJoined(), 30)
+					+ padString(result.getMemberFee(), 10) + padString(result.getMemberId(), 10));
         }
+
         System.out.println("End of listing");
     }
+
+	/**
+	 * Pads the string with spaces for displaying output
+	 * 
+	 * @author Richard Fritz - Modified from instructional code.
+	 */
+	public String padString(String stringToPad, int width) {
+		int stringLength = stringToPad.length();
+		int pad = width - stringLength;
+		String padding = "";
+		for (int i = 0; i < pad; i++) {
+			padding = padding + " ";
+		}
+		return stringToPad + padding;
+	}
 
     /**
      * prints all product.
