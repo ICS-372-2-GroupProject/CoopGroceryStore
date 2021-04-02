@@ -129,11 +129,11 @@ public class AutomatedTester {
 	 * will process order #O1. The product is "Eggs 12pk" and it begins with an
 	 * inventory of 10 units. The testCheckOutItems() method, which runs prior to
 	 * this test then purchases 6 units, bringing the stock on hand down to 4. This
-	 * test runs processShipment() and shows that the OPERATION_COMPLETE code is
+	 * test runs processShipment() and shows that the OPERATION_COMPLETE code was
 	 * received. It then shows that the Product's stock on hand has been increased
 	 * to 14 units. (Reorder level for this product is 5, so a new order will always
 	 * be 10 units.) Finally, the test runs with order #O200, which does not exist,
-	 * to show that the NO_ORDER_FOUND code is received.
+	 * to show that the NO_ORDER_FOUND code was received.
 	 * 
 	 * @author Marc Wedo
 	 */
