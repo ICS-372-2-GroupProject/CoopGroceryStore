@@ -141,9 +141,11 @@ public class AutomatedTester {
 	 * Test changePrice
 	 */
 	public void testChangePrice() {
-		Request.instance().setProductId("P01");
-		Request.instance().setProductPrice("4.49");
-		assert Request.instance().getProductPrice().equals("4.49");
+		Request.instance().setProductId("P25");
+		Request.instance().setProductPrice("5.00");
+		assert Request.instance().getProductPrice().equals("5.00");
+		Request.instance().setProductPrice("6.00");
+		assert Request.instance().getProductPrice().equals("6.00");
 		Result result = Store.instance().changePrice(Request.instance());
 		assert result.getResultCode() == Result.OPERATION_COMPLETED;
 
@@ -181,6 +183,7 @@ public class AutomatedTester {
 		testCheckOutItems();
 		// testSearchMembership();
 		testProcessShipment();
+		testChangePrice();
 		testGetTransactions();
 	}
 
