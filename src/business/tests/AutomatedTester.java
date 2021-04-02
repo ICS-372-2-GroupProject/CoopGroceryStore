@@ -5,7 +5,6 @@ import business.entities.Product;
 import business.facade.Request;
 import business.facade.Result;
 import business.facade.Store;
-import business.entities.iterators.SafeIterator;
 
 /**
  * This class generates sample automated tests for the Store system using
