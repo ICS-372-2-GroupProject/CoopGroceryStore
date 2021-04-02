@@ -405,8 +405,8 @@ public class Store implements Serializable {
         while (lineItems.hasNext()) {
             ordersPlaced = adjustInventory(lineItems.next(), ordersPlaced);
         }
-        result.setTransactionResult(ordersPlaced);
         result.setResultCode(Result.OPERATION_COMPLETED);
+        result.setTransactionResult(ordersPlaced);
         return result;
     }
 
