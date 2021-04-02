@@ -156,7 +156,7 @@ public class AutomatedTester {
 	 * Test changePrice
 	 */
 	public void testChangePrice() {
-		Request.instance().setProductId("P0");
+		Request.instance().setProductId("P01");
 		Request.instance().setProductPrice("5.00");
 		assert Request.instance().getProductPrice().equals("5.00");
 		Request.instance().setProductPrice("6.00");
