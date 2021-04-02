@@ -371,7 +371,7 @@ public class Store implements Serializable {
         }
         request.getCurrentTransaction().addItem(product, amount);
         result.setResultCode(Result.OPERATION_COMPLETED);
-        result.setProductName(product.getName());
+        result.setProductFields(product);
         return result;
     }
 
@@ -399,6 +399,10 @@ public class Store implements Serializable {
         Result result = new Result();
         Member member = members.search(request.getMemberId());
         member.addTransaction(request.getCurrentTransaction());
+        if (!member.addTransaction(request.getCurrentTransaction())) {
+            result.setResultCode(Result.OPERATION_FAILED);
+            return result;
+        }
         String ordersPlaced = "";
         Transaction transaction = request.getCurrentTransaction();
         Iterator<LineItem> lineItems = transaction.getLineItems();
@@ -423,7 +427,7 @@ public class Store implements Serializable {
         if (newStock <= product.getReorderLevel()) {
             int reorderAmount = product.getReorderLevel() * 2;
             Order reorder = new Order(product, reorderAmount);
-            orders.insertOrder(reorder); // boolean check
+            orders.insertOrder(reorder);
             ordersPlaced += String.format(
                     "%d items have been ordered for %s. (Order id: %s)\n",
                     reorderAmount, product.getName(), reorder.getId());

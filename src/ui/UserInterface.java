@@ -381,6 +381,10 @@ public class UserInterface {
             return;
         }
         result = store.beginTransaction(Request.instance());
+        if (result.getResultCode() != Result.OPERATION_COMPLETED) {
+            System.out.println("Transaction could not be created");
+            return;
+        }
         do {
             Request.instance().setProductId(getToken("Enter product id"));
             Request.instance()
@@ -396,17 +400,33 @@ public class UserInterface {
                         result.getProductName() + " scanned for checkout.");
                 break;
             default:
-                System.out.println("An error has occurred");
+                System.out.println("An error has occurred. Please rescan item");
             }
         } while (yesOrNo("Check out another item?"));
         result = store.displayPurchases(Request.instance());
+        if (result.getResultCode() != Result.OPERATION_COMPLETED) {
+            System.out.println(
+                    "An error has occurred. Please restart transaction");
+            return;
+        }
         System.out.println(result.getTransactionResult());
         if (!yesOrNo("Has the member paid total amount due (with cash)? \n")) {
             System.out.println("The transaction has been cancelled");
             return;
         }
         result = store.finalizeTransaction(Request.instance());
-        System.out.println(result.getTransactionResult());
+        switch (result.getResultCode()) {
+        case Result.OPERATION_FAILED:
+            System.out
+                    .println("CRITCAL ERROR: Transaction could not be saved ");
+            break;
+        case Result.OPERATION_COMPLETED:
+            System.out.println(result.getTransactionResult());
+            break;
+        default:
+            System.out
+                    .println("CRITCAL ERROR: Inventory has not been adjusted");
+        }
     }
 
     /**
