@@ -151,10 +151,13 @@ public class AutomatedTester {
         Request.instance().setProductStockOnHand(stockOnHand[0]);
         assert Request.instance().getProductStockOnHand() == 10;
         Result result = Store.instance().processShipment(Request.instance());
+        // Assertion will be 10.
+        System.out.println(Request.instance().getProductStockOnHand());
         assert result.getResultCode() == Result.OPERATION_COMPLETED;
         Request.instance().setProductStockOnHand(stockOnHand[0]);
+        // Assertion will be 10.
+        System.out.println(Request.instance().getProductStockOnHand());
         assert result.getProductStockOnHand() == 20;
-
         Request.instance().setOrderId("O200");
         result = Store.instance().processShipment(Request.instance());
         assert result.getResultCode() == Result.NO_ORDER_FOUND;
@@ -181,7 +184,7 @@ public class AutomatedTester {
         testEnrollMember();
         testRemoveMember();
         testAddProduct();
-        // testCheckOutItems();
+        testCheckOutItems();
         testProcessShipment();
         testChangePrice();
     }
