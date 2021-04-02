@@ -331,6 +331,12 @@ public class Store implements Serializable {
 		return result;
 	}
 
+	/**
+	 * for initialize new instance of Transaction class.
+	 * 
+	 * @param request
+	 * @return result
+	 */
 	public Result beginTransaction(Request request) {
 		Result result = new Result();
 		request.setCurrentTransaction(new Transaction());
@@ -338,6 +344,12 @@ public class Store implements Serializable {
 		return result;
 	}
 
+	/**
+	 * for handle check out item of a member.
+	 * 
+	 * @param request
+	 * @return result
+	 */
 	public Result checkOutItem(Request request) {
 		Result result = new Result();
 		Product product = inventory.search(request.getProductId());
@@ -353,6 +365,12 @@ public class Store implements Serializable {
 		return result;
 	}
 
+	/**
+	 * for helping set a transaction to the member by ID.
+	 * 
+	 * @param request
+	 * @return
+	 */
 	public void setTransactionToMember(Request request) {
 		Member member = members.search(request.getMemberId());
 		if (!member.addTransaction(request)) {
@@ -360,6 +378,12 @@ public class Store implements Serializable {
 		}
 	}
 
+	/**
+	 * for display Purchases a transaction result to the member by ID.
+	 * 
+	 * @param request
+	 * @return Result
+	 */
 	public Result displayPurchases(Request request) {
 		Result result = new Result();
 		String receipt = request.getCurrentTransaction().buildReceipt();
@@ -368,6 +392,12 @@ public class Store implements Serializable {
 		return result;
 	}
 
+	/**
+	 * to finalize Transaction
+	 * 
+	 * @param request
+	 * @return Result
+	 */
 	public Result finalizeTransaction(Request request) {
 		Result result = new Result();
 		String ordersPlaced = "";
@@ -381,6 +411,13 @@ public class Store implements Serializable {
 		return result;
 	}
 
+	/**
+	 * to adjust Inventory
+	 * 
+	 * @param lineItem     - LineItem
+	 * @param ordersPlaced - String
+	 * @return ordersPlaced - String
+	 */
 	private String adjustInventory(LineItem lineItem, String ordersPlaced) {
 		Product product = lineItem.getProduct();
 		int newStock = product.getStockOnHand() - lineItem.getPurchaseAmount();
@@ -499,16 +536,15 @@ public class Store implements Serializable {
 	 * @param EndDate   date of issue
 	 * @return iterator to the collection
 	 */
-	public Iterator<Transaction> getTransactions(Request request) {
+	public Iterator<Result> getTransactions(Request request) {
 		Member member = members.search(request.getMemberId());
 		if (member == null) {
-			return new LinkedList<Transaction>().iterator();
+			return new LinkedList<Result>().iterator();
 		}
-//        return new SafeIterator<Transaction>(
-//                member.getTransactionsBetweenDates(request.getBeginDate(),
-//                        request.getEndDate()),
-//                SafeIterator.TRANSACTION);
-		return member.getTransactionsBetweenDates(request.getBeginDate(), request.getEndDate());
+		return new SafeIterator<Transaction>(
+				member.getTransactionsBetweenDates(request.getBeginDate(), request.getEndDate()),
+				SafeIterator.TRANSACTION);
+//		return member.getTransactionsBetweenDates(request.getBeginDate(), request.getEndDate());
 	}
 
 	/**

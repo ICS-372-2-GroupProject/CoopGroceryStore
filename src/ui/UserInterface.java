@@ -30,7 +30,6 @@ import java.util.Iterator;
 import java.util.StringTokenizer;
 
 import business.entities.Order;
-import business.entities.Transaction;
 import business.facade.Request;
 import business.facade.Result;
 import business.facade.Store;
@@ -92,8 +91,7 @@ public class UserInterface {
 	/**
 	 * Gets a token after prompting
 	 * 
-	 * @param prompt
-	 *            - whatever the user wants as prompt
+	 * @param prompt - whatever the user wants as prompt
 	 * @return - the token from the keyboard
 	 */
 	public String getToken(String prompt) {
@@ -114,8 +112,7 @@ public class UserInterface {
 	/**
 	 * Gets a name after prompting
 	 * 
-	 * @param prompt
-	 *            - whatever the user wants as prompt
+	 * @param prompt - whatever the user wants as prompt
 	 * @return - the token from the keyboard
 	 */
 	public String getName(String prompt) {
@@ -134,8 +131,7 @@ public class UserInterface {
 	/**
 	 * Queries for a yes or no and returns true for yes and false for no
 	 * 
-	 * @param prompt
-	 *            The string to be prepended to the yes/no prompt
+	 * @param prompt The string to be prepended to the yes/no prompt
 	 * @return true for yes and false for no
 	 */
 	private boolean yesOrNo(String prompt) {
@@ -149,8 +145,7 @@ public class UserInterface {
 	/**
 	 * Converts the string to a number
 	 * 
-	 * @param prompt
-	 *            the string for prompting
+	 * @param prompt the string for prompting
 	 * @return the integer corresponding to the string
 	 */
 	public int getNumber(String prompt) {
@@ -168,8 +163,7 @@ public class UserInterface {
 	/**
 	 * Converts the string to a decimal number
 	 * 
-	 * @param prompt
-	 *            the string for prompting
+	 * @param prompt the string for prompting
 	 * @return the decimal corresponding to the string
 	 */
 	public String getDecimalForm(String prompt) {
@@ -188,8 +182,7 @@ public class UserInterface {
 	 * Prompts for a date and gets a date object
 	 * 
 	 * 
-	 * @param prompt
-	 *            the prompt
+	 * @param prompt the prompt
 	 * 
 	 * @return the data as a Calendar object
 	 */
@@ -210,10 +203,8 @@ public class UserInterface {
 	/**
 	 * Prompts for get Begin And End Date.
 	 * 
-	 * @param beginDate
-	 *            - Calendar
-	 * @param endDate
-	 *            - Calendar
+	 * @param beginDate - Calendar
+	 * @param endDate   - Calendar
 	 * 
 	 * @return array of Calendar that include begin and end dates.
 	 */
@@ -269,7 +260,7 @@ public class UserInterface {
 		System.out.println(CHANGE_PRICE + " to change the price of a product");
 		System.out.println(RETRIEVE_PRODUCT_INFO + " to list details of a product");
 		System.out.println(RETRIEVE_MEMBER_INFO + " to list details of a member");
-		System.out.println(GET_TRANSACTIONS + " to print all transactions of product");
+		System.out.println(GET_TRANSACTIONS + " to print all transactions of a member");
 		System.out.println(GET_OUTSTANDING_ORDERS + " to print all outstanding orders");
 		System.out.println(GET_MEMBERS + " to print all members");
 		System.out.println(GET_PRODUCT + " to print all product");
@@ -463,20 +454,29 @@ public class UserInterface {
 
 	/**
 	 * Method to be called for displaying transactions. Prompts the user for the
-	 * appropriate values and uses the appropriate store method for displaying
-	 * transactions.
+	 * appropriate memberID, beginning date and ending date for using the
+	 * appropriate store method for displaying transactions.
+	 * 
+	 * @author Nalongsone Danddank
+	 * 
 	 */
 	public void getTransactions() {
 		Request.instance().setMemberId(getToken("Enter member id"));
+		Result resultOfId = store.searchMembership(Request.instance());
+		if (resultOfId.getResultCode() != Result.OPERATION_COMPLETED) {
+			System.out.println("No member with id: " + Request.instance().getMemberId());
+			return;
+		}
 		Calendar beginAndEndDate[] = getBeginAndEndDate(
 				getDate("Please enter the begin date for which you want records as mm/dd/yy"),
 				getDate("Please enter the end date for which you want records as mm/dd/yy"));
 		Request.instance().setBeginDate(beginAndEndDate[0]);
 		Request.instance().setEndDate(beginAndEndDate[1]);
-		Iterator<Transaction> results = store.getTransactions(Request.instance());
+		Iterator<Result> results = store.getTransactions(Request.instance());
+		System.out.println("The Transactions of MemberID " + Request.instance().getMemberId() + " are:\n");
 		while (results.hasNext()) {
-			Transaction result = (Transaction) results.next();
-			System.out.println(result);
+			Result result = (Result) results.next();
+			System.out.println(result.getCurrentTransaction());
 		}
 		System.out.println("\n End of transactions \n");
 	}
@@ -647,8 +647,7 @@ public class UserInterface {
 	/**
 	 * The method to start the application. Simply calls process().
 	 * 
-	 * @param args
-	 *            not used
+	 * @param args not used
 	 */
 	public static void main(String[] args) {
 		UserInterface.instance().process();

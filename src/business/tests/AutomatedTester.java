@@ -5,7 +5,6 @@ import java.util.Iterator;
 
 import business.entities.Member;
 import business.entities.Product;
-import business.entities.Transaction;
 import business.facade.Request;
 import business.facade.Result;
 import business.facade.Store;
@@ -17,7 +16,6 @@ import business.facade.Store;
  * @author Brahma Dathan
  */
 public class AutomatedTester {
-	private Store store;
 	private String[] memberNames = { "Rich Fritz", "Ryan Kinsella", "Nalongsone Danddank", "Marc Wedo",
 			"Gilbert Ponsness" };
 	private String[] addresses = { "123 4th street", "567 8th Street", "910 11th Ave", "1213 14th Ave",
@@ -93,6 +91,9 @@ public class AutomatedTester {
 		}
 	}
 
+	/**
+	 * Test checkOutItems
+	 */
 	public void testCheckOutItems() {
 		Request.instance().setMemberId("M1");
 		Result result = Store.instance().searchMembership(Request.instance());
@@ -154,6 +155,11 @@ public class AutomatedTester {
 		assert result.getResultCode() == Result.PRODUCT_NOT_FOUND;
 	}
 
+	/**
+	 * Automated test method to test the getTransactions functionality.
+	 * 
+	 * @author Nalongsone Danddank
+	 */
 	public void testGetTransactions() {
 		Calendar beginDate = Calendar.getInstance();
 		beginDate.set(2012, Calendar.JULY, 1, 0, 0, 0);
@@ -161,27 +167,35 @@ public class AutomatedTester {
 		Request.instance().setMemberId("M1");
 		Request.instance().setBeginDate(beginDate);
 		Request.instance().setEndDate(endDate);
-
-		Iterator<Transaction> results = Store.instance().getTransactions(Request.instance());
+		Iterator<Result> results = Store.instance().getTransactions(Request.instance());
 		while (results.hasNext()) {
-			Transaction trans = (Transaction) results.next();
-			System.out.println(trans);
-
+			Result result = (Result) results.next();
+			assert result.getResultCode() == Result.OPERATION_COMPLETED;
 		}
+
+		endDate.set(2013, Calendar.JULY, 1, 0, 0, 0);
+		Request.instance().setEndDate(endDate);
+		results = Store.instance().getTransactions(Request.instance());
+		assert results.hasNext() == false;
+
+		Request.instance().setMemberId("NN1");
+		results = Store.instance().getTransactions(Request.instance());
+		assert results.hasNext() == false;
 	}
 
-	/*
-	 * public void testSearchMembership() { Request.instance().setMemberId("M1");
-	 * assert Store.instance().searchMembership(Request.instance()).getMemberId().
-	 * equals( "M1"); Request.instance().setMemberId("M6"); assert
-	 * Store.instance().searchMembership(Request.instance()) == null; }
-	 */
+	public void testSearchMembership() {
+		Request.instance().setMemberId("M1");
+		assert Store.instance().searchMembership(Request.instance()).getMemberId().equals("M1");
+		Request.instance().setMemberId("M6");
+		assert Store.instance().searchMembership(Request.instance()) == null;
+	}
+
 	public void testAll() {
 		testEnrollMember();
 		testRemoveMember();
 		testAddProduct();
 		testCheckOutItems();
-		// testSearchMembership();
+		testSearchMembership();
 		testProcessShipment();
 		testChangePrice();
 		testGetTransactions();

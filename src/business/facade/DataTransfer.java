@@ -243,7 +243,7 @@ public abstract class DataTransfer {
 		orderQuantity = 0;
 	}
 
-	// for debug.
+	// for debugging.
 	@Override
 	public String toString() {
 		return "DataTransfer [productName=" + productName + ", productId=" + productId + ", productPrice="

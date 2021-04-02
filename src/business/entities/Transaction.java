@@ -38,83 +38,92 @@ import business.entities.helpers.LineItem;
  */
 
 public class Transaction implements Serializable {
-    private static final long serialVersionUID = 1L;
-    private Calendar date;
-    private double purchaseTotal;
-    private List<LineItem> groceryItems = new LinkedList<LineItem>();
+	private static final long serialVersionUID = 1L;
+	private Calendar date;
+	private double purchaseTotal;
+	private List<LineItem> groceryItems = new LinkedList<LineItem>();
 
-    /**
-     * Initializes a new transaction.
-     */
-    public Transaction() {
-        date = new GregorianCalendar();
-        purchaseTotal = 0;
-    }
+	/**
+	 * Initializes a new transaction.
+	 */
+	public Transaction() {
+		date = new GregorianCalendar();
+		purchaseTotal = 0;
+	}
 
-    /**
-     * Adds a grocery item to the transaction.
-     * 
-     * @param itemForPurchase the product to be purchased
-     * @param purchaseAmount  the amount of items being purchased
-     * @return String which displays sale information for line item
-     */
-    public String addItem(Product itemForPurchase, int purchaseAmount) {
-        LineItem lineItem = new LineItem(itemForPurchase, purchaseAmount);
-        groceryItems.add(lineItem);
-        purchaseTotal += lineItem.getPurchasePrice();
-        return lineItem.toString();
-    }
+	/**
+	 * Adds a grocery item to the transaction.
+	 * 
+	 * @param itemForPurchase the product to be purchased
+	 * @param purchaseAmount  the amount of items being purchased
+	 * @return String which displays sale information for line item
+	 */
+	public String addItem(Product itemForPurchase, int purchaseAmount) {
+		LineItem lineItem = new LineItem(itemForPurchase, purchaseAmount);
+		groceryItems.add(lineItem);
+		purchaseTotal += lineItem.getPurchasePrice();
+		return lineItem.toString();
+	}
 
-    /**
-     * Returns the transaction purchase total as a String
-     * 
-     * @return purchaseTotal in proper dollar format
-     */
-    public String getPurchaseTotal() {
-        return String.format("$%.2f", purchaseTotal);
-    }
+	/**
+	 * Returns the transaction purchase total as a String
+	 * 
+	 * @return purchaseTotal in proper dollar format
+	 */
+	public String getPurchaseTotal() {
+		return String.format("$%.2f", purchaseTotal);
+	}
 
-    /**
-     * Checks whether this transaction is between the given date range
-     * 
-     * @param beginDate lower bound for date range
-     * @param endDate   upper bound for date range
-     * @return true iff date is within range
-     */
-    public boolean betweenDates(Calendar beginDate, Calendar endDate) {
-        return this.date.after(beginDate) && this.date.before(endDate);
-    }
+	/**
+	 * Checks whether this transaction is between the given date range
+	 * 
+	 * @param beginDate lower bound for date range
+	 * @param endDate   upper bound for date range
+	 * @return true iff date is within range
+	 */
+	public boolean betweenDates(Calendar beginDate, Calendar endDate) {
+		return this.date.after(beginDate) && this.date.before(endDate);
+	}
 
-    /**
-     * Returns the transaction date as a String
-     * 
-     * @return date with month, date, and year
-     */
-    public String getDate() {
-        return date.get(Calendar.MONTH) + "/" + date.get(Calendar.DATE) + "/"
-                + date.get(Calendar.YEAR);
-    }
+	/**
+	 * Returns the transaction date as a String
+	 * 
+	 * @return date with month, date, and year
+	 */
+	public String getDate() {
+		return date.get(Calendar.MONTH) + "/" + date.get(Calendar.DATE) + "/" + date.get(Calendar.YEAR);
+	}
 
-    public Iterator<LineItem> getLineItems() {
-        return groceryItems.iterator();
-    }
+	/**
+	 * get LineItems
+	 * 
+	 * @return groceryItems - Iterator
+	 */
+	public Iterator<LineItem> getLineItems() {
+		return groceryItems.iterator();
+	}
 
-    public String buildReceipt() {
-        Iterator<LineItem> iterator = getLineItems();
-        String receipt = "";
-        while (iterator.hasNext()) {
-            receipt += iterator.next().toString() + "\n";
-        }
-        receipt += "\t\t  TOTAL AMOUNT DUE: " + getPurchaseTotal();
-        return receipt;
-    }
+	/**
+	 * build a Receipt
+	 * 
+	 * @return receipt - String
+	 */
+	public String buildReceipt() {
+		Iterator<LineItem> iterator = getLineItems();
+		String receipt = "";
+		while (iterator.hasNext()) {
+			receipt += iterator.next().toString() + "\n";
+		}
+		receipt += "\t\t  TOTAL AMOUNT DUE: " + getPurchaseTotal();
+		return receipt;
+	}
 
-    /**
-     * 
-     * @return String form of the transaction
-     */
-    @Override
-    public String toString() {
-        return ("Transaction on: " + getDate() + "\n" + buildReceipt());
-    }
+	/**
+	 * 
+	 * @return String form of the transaction
+	 */
+	@Override
+	public String toString() {
+		return ("Transaction on: " + getDate() + "\n" + buildReceipt());
+	}
 }

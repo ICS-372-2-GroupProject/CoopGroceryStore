@@ -70,6 +70,8 @@ public class Member implements Serializable {
 	/**
 	 * Gets an iterator to a collection of selected transactions
 	 * 
+	 * @author Nalongsone Danddank
+	 * 
 	 * @param beginDate the beginning date for which the transactions have to be
 	 *                  retrieved after.
 	 * @param endDate   the ending date for which the transactions have to be

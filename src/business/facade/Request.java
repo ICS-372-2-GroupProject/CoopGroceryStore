@@ -12,8 +12,8 @@ import java.util.Calendar;
 public class Request extends DataTransfer {
 	private static Request request;
 	private Calendar date;
-	private Calendar beginDate;
-	private Calendar endDate;
+	private Calendar beginDate;// add for find out beginning date of Transactions
+	private Calendar endDate;// add for find out ending date of Transactions
 
 	/**
 	 * This is a singleton class. Hence the private constructor.

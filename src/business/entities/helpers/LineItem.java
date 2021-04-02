@@ -8,7 +8,7 @@ import business.entities.Product;
  * Helper class for Transaction. Stores relevant information for each product
  * purchased.
  * 
- * @author G.D.Ponsness
+ * @author G.D.Ponsness and Nalongsone Danddank
  */
 
 public class LineItem implements Serializable {

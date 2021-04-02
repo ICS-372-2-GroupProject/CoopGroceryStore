@@ -23,82 +23,83 @@ import business.facade.Result;
  * @param <T> Either Product or Member
  */
 public class SafeIterator<T> implements Iterator<Result> {
-    private Iterator<T> iterator;
-    private Type type;
-    private Result result = new Result();
-    public static final Type PRODUCT = new SafeProduct();
-    public static final Type MEMBER = new SafeMember();
-    public static final Type TRANSACTION = new SafeTransaction();
+	private Iterator<T> iterator;
+	private Type type;
+	private Result result = new Result();
+	public static final Type PRODUCT = new SafeProduct();
+	public static final Type MEMBER = new SafeMember();
+	public static final Type TRANSACTION = new SafeTransaction();
 
-    /**
-     * This class is designed to ensure that the appropriate object is used to
-     * copy to the Result object.
-     * 
-     * @author Brahma Dathan
-     */
-    public abstract static class Type {
-        /**
-         * The copy method is used to copy the object to Result. Object is
-         * Product or Member at present.
-         * 
-         * @param result the Result object
-         * @param object the Product or Member object
-         */
-        public abstract void copy(Result result, Object object);
+	/**
+	 * This class is designed to ensure that the appropriate object is used to copy
+	 * to the Result object.
+	 * 
+	 * @author Brahma Dathan
+	 */
+	public abstract static class Type {
+		/**
+		 * The copy method is used to copy the object to Result. Object is Product or
+		 * Member at present.
+		 * 
+		 * @param result the Result object
+		 * @param object the Product or Member object
+		 */
+		public abstract void copy(Result result, Object object);
 
-        public static class SafeProduct extends Type {
-            @Override
-            public void copy(Result result, Object object) {
-                Product product = (Product) object;
-                result.setProductFields(product);
-            }
-        }
+		public static class SafeProduct extends Type {
+			@Override
+			public void copy(Result result, Object object) {
+				Product product = (Product) object;
+				result.setProductFields(product);
+			}
+		}
 
-        public static class SafeMember extends Type {
-            @Override
-            public void copy(Result result, Object object) {
-                Member member = (Member) object;
-                result.setMemberFields(member);
-            }
-        }
+		public static class SafeMember extends Type {
+			@Override
+			public void copy(Result result, Object object) {
+				Member member = (Member) object;
+				result.setMemberFields(member);
+			}
+		}
 
-        public static class SafeTransaction extends Type {
-            @Override
-            public void copy(Result result, Object object) {
-                Transaction transaction = (Transaction) object;
-                result.setCurrentTransaction(transaction);
-            }
-        }
-    }
+		// for copy Transaction class.
+		public static class SafeTransaction extends Type {
+			@Override
+			public void copy(Result result, Object object) {
+				Transaction transaction = (Transaction) object;
+				result.setResultCode(Result.OPERATION_COMPLETED);
+				result.setCurrentTransaction(transaction);
+			}
+		}
+	}
 
-    /**
-     * The user of SafeIterator must supply an Iterator to Product or Member. If
-     * Iterator<Product> is passed as the first parameter, SafeItearator.PRODUCT
-     * should be passed as the second parameter. If Iterator<Member> is passed
-     * as the first parameter, SafeItearator.MEMBER should be the second
-     * parameter.
-     * 
-     * @param iterator Iterator<Product> or Iterator<Member>
-     * @param type     SafeItearator.PRODUCT or SafeItearator.MEMBER
-     */
-    public SafeIterator(Iterator<T> iterator, Type type) {
-        this.iterator = iterator;
-        this.type = type;
-    }
+	/**
+	 * The user of SafeIterator must supply an Iterator to Product or Member. If
+	 * Iterator<Product> is passed as the first parameter, SafeItearator.PRODUCT
+	 * should be passed as the second parameter. If Iterator<Member> is passed as
+	 * the first parameter, SafeItearator.MEMBER should be the second parameter.
+	 * 
+	 * @param iterator Iterator<Product> or Iterator<Member>
+	 * @param type     SafeItearator.PRODUCT or SafeItearator.MEMBER
+	 */
+	public SafeIterator(Iterator<T> iterator, Type type) {
+		this.iterator = iterator;
+		this.type = type;
+	}
 
-    @Override
-    public boolean hasNext() {
-        return iterator.hasNext();
-    }
+	@Override
+	public boolean hasNext() {
+		return iterator.hasNext();
+	}
 
-    @Override
-    public Result next() {
-        if (iterator.hasNext()) {
-            type.copy(result, iterator.next());
-        } else {
-            throw new NoSuchElementException("No such element");
-        }
-        return result;
-    }
+	@Override
+	public Result next() {
+		if (iterator.hasNext()) {
+			type.copy(result, iterator.next());
+		} else {
+			throw new NoSuchElementException("No such element");
+		}
+		return result;
+	}
 
 }
