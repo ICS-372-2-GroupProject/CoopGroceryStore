@@ -471,10 +471,11 @@ public class UserInterface {
             Result result = iterator.next();
             if (result.getProductName().toUpperCase()
                     .startsWith(name.toUpperCase())) {
-                System.out.println(result.getProductName() + " "
-                        + result.getProductId() + " " + result.getProductPrice()
-                        + " " + result.getProductStockOnHand() + " "
-                        + result.getProductReorderLevel());
+                System.out.println(
+                        result.getProductName() + "\t" + result.getProductId()
+                                + "\t" + result.getProductPrice() + "\t"
+                                + result.getProductStockOnHand() + "\t"
+                                + result.getProductReorderLevel());
                 productFound = true;
             }
         }
@@ -500,9 +501,9 @@ public class UserInterface {
             Result result = iterator.next();
             if (result.getMemberName().toUpperCase()
                     .startsWith(name.toUpperCase())) {
-                System.out.println(result.getMemberName() + " "
-                        + result.getMemberAddress() + " "
-                        + result.getMemberFee() + " " + result.getMemberId());
+                System.out.println(result.getMemberName() + "\t"
+                        + result.getMemberAddress() + "\t"
+                        + result.getMemberFee() + "\t" + result.getMemberId());
                 memberFound = true;
             }
         }
@@ -559,9 +560,9 @@ public class UserInterface {
                 + "(Order Number, Product Name, Order Date/Time, Quantity Ordered)\n");
         while (result.hasNext()) {
             Order order = (Order) result.next();
-            System.out.println(order.getId() + ", "
-                    + order.getProductOrdered().getName() + ", "
-                    + order.getDateOrdered() + ", " + order.getQtyOrdered());
+            System.out.println(order.getId() + "\t"
+                    + order.getProductOrdered().getName() + "\t"
+                    + order.getDateOrdered() + "\t" + order.getQtyOrdered());
         }
         System.out.println("\nEnd of listing\n");
     }
@@ -577,10 +578,10 @@ public class UserInterface {
                 + "(Member Name, address, phone, date joined, fee paid, Member Id)");
         while (iterator.hasNext()) {
             Result result = iterator.next();
-            System.out.println(result.getMemberName() + " "
-                    + result.getMemberAddress() + " " + result.getMemberPhone()
-                    + " " + result.getMemberDateJoined() + " "
-                    + result.getMemberFee() + " " + result.getMemberId());
+            System.out.println(result.getMemberName() + "\t"
+                    + result.getMemberAddress() + "\t" + result.getMemberPhone()
+                    + " " + result.getMemberDateJoined() + "\t"
+                    + result.getMemberFee() + "\t" + result.getMemberId());
         }
         System.out.println("End of listing");
     }
@@ -596,10 +597,10 @@ public class UserInterface {
                 + " (Product Name, Stock on Hand, Current Price, Reorder Level, Product Id)");
         while (iterator.hasNext()) {
             Result result = iterator.next();
-            System.out.println(result.getProductName() + " "
-                    + result.getProductStockOnHand() + " "
-                    + result.getProductPrice() + " "
-                    + result.getProductReorderLevel() + " "
+            System.out.println(result.getProductName() + "\t"
+                    + result.getProductStockOnHand() + "\t"
+                    + result.getProductPrice() + "\t"
+                    + result.getProductReorderLevel() + "\t"
                     + result.getProductId());
         }
         System.out.println("End of listing");
