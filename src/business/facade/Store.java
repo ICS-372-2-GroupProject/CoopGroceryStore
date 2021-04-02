@@ -398,8 +398,9 @@ public class Store implements Serializable {
     public Result finalizeTransaction(Request request) {
         Result result = new Result();
         Member member = members.search(request.getMemberId());
-        member.addTransaction(request.getCurrentTransaction());
-        if (!member.addTransaction(request.getCurrentTransaction())) {
+        boolean transactionSaved = member
+                .addTransaction(request.getCurrentTransaction());
+        if (!transactionSaved) {
             result.setResultCode(Result.OPERATION_FAILED);
             return result;
         }
@@ -407,8 +408,7 @@ public class Store implements Serializable {
         Iterator<LineItem> lineItems = request.getCurrentTransaction()
                 .getLineItems();
         while (lineItems.hasNext()) {
-            adjustInventory(lineItems.next(), ordersPlaced);
-
+            ordersPlaced += adjustInventory(lineItems.next());
         }
         result.setResultCode(Result.OPERATION_COMPLETED);
         result.setMemberFields(member);
@@ -423,24 +423,22 @@ public class Store implements Serializable {
      * @param ordersPlaced - String
      * @return ordersPlaced - String
      */
-    private String adjustInventory(LineItem lineItem, String ordersPlaced) {
+    private String adjustInventory(LineItem lineItem) {
+        String orderPlaced = "";
         Product product = lineItem.getProduct();
         int newStock = product.getStockOnHand() - lineItem.getPurchaseAmount();
         System.out.println("Adjusting for " + product.getName());
         product.setStockOnHand(newStock);
-        Order existingOrder = orders.search(product.getId());
-        System.out.println("Searching for " + existingOrder);
-        if (newStock <= product.getReorderLevel()
-                && (existingOrder == null || !existingOrder.isOutstanding())) {
+        if (newStock <= product.getReorderLevel()) {
             System.out.println("Order placed for " + product.getName());
             int reorderAmount = product.getReorderLevel() * 2;
             Order reorder = new Order(product, reorderAmount);
             orders.insertOrder(reorder);
-            ordersPlaced += String.format(
-                    "%d items have been ordered for %s. (Order id: %s)\n",
+            orderPlaced += String.format(
+                    "%d items have been ordered for %s\n(Order id: %s)\n",
                     reorderAmount, product.getName(), reorder.getId());
         }
-        return ordersPlaced;
+        return orderPlaced;
     }
 
     /**
