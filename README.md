@@ -1,5 +1,5 @@
-#Grocery Store Application Project
-####Project's Members:
+# Grocery Store Application Project
+#### Project's Members:
 
 	Nalongsone Danddank,
 	Rich Fritz,
@@ -7,7 +7,7 @@
 	Gilbert Ponsness,
 	Marc Wedo
 
-###Course infos:
+### Course infos:
 	Group Project
 	Computer Science's 
 	ICS372-02
