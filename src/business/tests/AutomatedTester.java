@@ -177,9 +177,6 @@ public class AutomatedTester {
 		// testSearchMembership();
 		testProcessShipment();
 		// testGetTransactions();
-		// testSearchMembership();
-		testProcessShipment();
-		testGetTransactions();
 	}
 
 	public static void main(String[] args) {
