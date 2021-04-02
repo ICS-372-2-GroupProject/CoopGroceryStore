@@ -278,8 +278,9 @@ public class Store implements Serializable {
 	}
 
 	/**
-	 * Adds a product to product list - code updates by Richard Fritz
+	 * Adds a product to product list
 	 * 
+	 * @author Richard Fritz - Modified from instructional code.
 	 * @param request - request is of type Request that extends DataTransfer. The
 	 *                fields in DataTransfer that are used in addProduct include
 	 *                productName, productCurrentPrice, productReorderLevel
@@ -432,9 +433,9 @@ public class Store implements Serializable {
 	}
 
 	/**
-	 * Organizes the operations for enrolling a member - code updates by Richard
-	 * Fritz
+	 * Organizes the operations for enrolling a member
 	 * 
+	 * @author Richard Fritz - Modified from instructional code.
 	 * @param request - request is of type Request that extends DataTransfer. the
 	 *                fields in DataTransfer that relate to enrollMember include
 	 *                memberName, memberPhone, memberFee
@@ -455,8 +456,9 @@ public class Store implements Serializable {
 	}
 
 	/**
-	 * Removes a member from the member list - code updates by Richard Fritz
+	 * Removes a member from the member list
 	 * 
+	 * @author Richard Fritz - Modified from instructional code.
 	 * @param request - request is of type Request that extends DataTransfer. the
 	 *                field in DataTransfer that relate to removeMember is memberId
 	 * @return result - result is of type Result and condition returned will be

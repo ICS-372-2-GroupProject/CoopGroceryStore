@@ -165,11 +165,13 @@ public class UserInterface {
 	 * 
 	 * @param prompt the string for prompting
 	 * @return the decimal corresponding to the string
+	 * @author Richard Fritz - Modified from instructional code.
 	 */
 	public String getDecimalForm(String prompt) {
 		do {
 			try {
 				String item = getToken(prompt);
+				@SuppressWarnings("unused") // this is only used to generate an error if a non decimal string
 				Double number = Double.valueOf(item);
 				return item;
 			} catch (NumberFormatException nfe) {
@@ -250,7 +252,7 @@ public class UserInterface {
 	 * Displays the help screen
 	 */
 	public void help() {
-		System.out.println("Enter a number between 0 and ???? as explained below:");
+		System.out.println("Enter a number between 0 and 14 as explained below:");
 		System.out.println("\n" + EXIT + " to Exit");
 		System.out.println(ENROLL_MEMBER + " to enroll a member");
 		System.out.println(REMOVE_MEMBER + " to remove a member");
@@ -269,14 +271,16 @@ public class UserInterface {
 	}
 
 	/**
-	 * code updated by Richard Fritz Method to be called for enrolling a member.
-	 * Prompts the user for the appropriate values and uses the Store method
-	 * enrollMember() for adding the member.
+	 * called for enrolling a member. Prompts the user for the appropriate values
+	 * and uses the Store method enrollMember() for adding the member.
+	 * 
+	 * @author Richard Fritz - Modified from instructional code.
 	 */
 	public void enrollMember() {
 		Request.instance().setMemberName(getName("Enter member name"));
 		Request.instance().setMemberAddress(getName("Enter address"));
 		Request.instance().setMemberPhone(getName("Enter phone"));
+		Request.instance().setMemberFee(getDecimalForm("Enter Fee Paid"));
 		Result result = store.enrollMember(Request.instance());
 		if (result.getResultCode() != Result.OPERATION_COMPLETED) {
 			System.out.println("Could not add member");
@@ -286,9 +290,11 @@ public class UserInterface {
 	}
 
 	/**
-	 * code updated by Richard Fritz Method to be called for adding a product.
-	 * Prompts the user for the appropriate values and uses the appropriate Store
-	 * method for adding the product.
+	 * Method to be called for adding a product. Prompts the user for the
+	 * appropriate values and uses the appropriate Store method for adding the
+	 * product.
+	 * 
+	 * @author Richard Fritz - Modified from instructional code.
 	 */
 	public void addProduct() {
 		Request.instance().setProductName(getName("Enter  Product Name"));
@@ -377,9 +383,10 @@ public class UserInterface {
 	}
 
 	/**
-	 * code updated by Richard Fritz Method to be called for removing a member.
-	 * Prompts the user for the appropriate values and uses Store method
-	 * removeMember() for removing member.
+	 * Method to be called for removing a member. Prompts the user for the
+	 * appropriate values and uses Store method removeMember() for removing member.
+	 * 
+	 * @author Richard Fritz - Modified from instructional code.
 	 */
 	public void removeMember() {
 		Request.instance().setMemberId(getToken("Enter member id"));
@@ -502,7 +509,9 @@ public class UserInterface {
 	}
 
 	/**
-	 * code updated by Richard Fritz Displays all members
+	 * Displays all members
+	 * 
+	 * @author Richard Fritz - Modified from instructional code.
 	 */
 	public void getMembers() {
 		Iterator<Result> iterator = store.getMembers();
@@ -516,7 +525,9 @@ public class UserInterface {
 	}
 
 	/**
-	 * code updated by Richard Fritz Gets and prints all product.
+	 * prints all product.
+	 * 
+	 * @author Richard Fritz - Modified from instructional code.
 	 */
 	public void getProduct() {
 		Iterator<Result> iterator = store.getProduct();

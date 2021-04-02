@@ -21,7 +21,6 @@ public class AutomatedTester {
 	private String[] addresses = { "123 4th street", "567 8th Street", "910 11th Ave", "1213 14th Ave",
 			"1516 17th Ln" };
 	private String[] phones = { "123-4567", "234-5678", "345-7890", "987-6543", "876-5432" };
-	private String[] dateJoined = { "01-JAN-2021", "02-FEB-2021", "03-MAR-2021", "04-APR-2021", "05-MAY-2021" };
 	private String[] fee = { "20", "20", "20", "20", "20" };
 	private Member[] members = new Member[5];
 	private String[] productName = { "Soda 12pk", "Corn Chips", "Apples 2lb", "Cookies", "Bread", "Eggs 12pk",
@@ -37,13 +36,14 @@ public class AutomatedTester {
 
 	/**
 	 * Tests Member creation.
+	 * 
+	 * @author Richard Fritz - Modified from instructional code.
 	 */
 	public void testEnrollMember() {
 		for (int count = 0; count < members.length; count++) {
 			Request.instance().setMemberName(memberNames[count]);
 			Request.instance().setMemberAddress(addresses[count]);
 			Request.instance().setMemberPhone(phones[count]);
-			Request.instance().setMemberDateJoined(dateJoined[count]);
 			Request.instance().setMemberFee(fee[count]);
 
 			Result result = Store.instance().enrollMember(Request.instance());
@@ -55,6 +55,8 @@ public class AutomatedTester {
 
 	/**
 	 * Tests Member Removal.
+	 * 
+	 * @author Richard Fritz - Modified from instructional code.
 	 */
 	public void testRemoveMember() {
 		Request.instance().setMemberName("Member Beingremoved");
@@ -76,6 +78,8 @@ public class AutomatedTester {
 
 	/**
 	 * Test addProduct
+	 * 
+	 * @author Richard Fritz - Modified from instructional code.
 	 */
 	public void testAddProduct() {
 		for (int count = 0; count < products.length; count++) {
@@ -89,6 +93,16 @@ public class AutomatedTester {
 			assert result.getProductName().equals(productName[count]);
 			assert result.getProductId().equals(productId[count]);
 		}
+		Request.instance().setProductName("Soda 12pk");
+		Request.instance().setProductId("P01");
+		Request.instance().setProductStockOnHand(5);
+		Request.instance().setProductPrice("5.00");
+		Request.instance().setProductReorderLevel(10);
+		Result result = Store.instance().addProduct(Request.instance());
+		assert result.getResultCode() == Result.PRODUCT_EXISTS : result.getResultCode();
+		Request.instance().setProductId("P21");
+		result = Store.instance().addProduct(Request.instance());
+		assert result.getResultCode() == Result.NAME_IN_USE : result.getResultCode();
 	}
 
 	/**
@@ -195,9 +209,9 @@ public class AutomatedTester {
 		testRemoveMember();
 		testAddProduct();
 		testCheckOutItems();
-		testSearchMembership();
+		// testSearchMembership();
 		testProcessShipment();
-		testChangePrice();
+		// testChangePrice();
 		testGetTransactions();
 	}
 
