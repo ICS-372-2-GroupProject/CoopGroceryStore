@@ -313,7 +313,7 @@ public class UserInterface {
      * @author Richard Fritz - Modified from instructional code.
      */
     public void addProduct() {
-        Request.instance().setProductName(getName("Enter  Product Name"));
+        Request.instance().setProductName(getName("Enter Product Name"));
         Request.instance().setProductId(getToken("Enter Product id"));
         Request.instance()
                 .setProductStockOnHand(getNumber("Enter Stock on Hand"));
@@ -421,6 +421,8 @@ public class UserInterface {
                     .println("CRITCAL ERROR: Transaction could not be saved ");
             break;
         case Result.OPERATION_COMPLETED:
+            System.out.println(
+                    "Transaction complete for member " + result.getMemberId());
             System.out.println(result.getTransactionResult());
             break;
         default:
@@ -534,13 +536,13 @@ public class UserInterface {
         Request.instance().setBeginDate(beginAndEndDate[0]);
         Request.instance().setEndDate(beginAndEndDate[1]);
         Iterator<Result> results = store.getTransactions(Request.instance());
-        System.out.println("The Transactions of MemberID "
-                + Request.instance().getMemberId() + " are:\n");
+        System.out.println("Previous transactions for member "
+                + Request.instance().getMemberId() + ":\n");
         while (results.hasNext()) {
             Result result = (Result) results.next();
             System.out.println(result.getCurrentTransaction());
         }
-        System.out.println("\n End of transactions \n");
+        System.out.println("\nEnd of listing\n");
     }
 
     /**
@@ -553,16 +555,15 @@ public class UserInterface {
      */
     public void getOutstandingOrders() {
         Iterator<Order> result = store.getOutstandingOrders();
-        System.out.println("List of Outstanding Orders");
-        System.out.println(
-                "(Order Number, Product Name, Order Date/Time, Quantity Ordered)");
+        System.out.println("List of Outstanding Orders\n"
+                + "(Order Number, Product Name, Order Date/Time, Quantity Ordered)\n");
         while (result.hasNext()) {
             Order order = (Order) result.next();
             System.out.println(order.getId() + ", "
                     + order.getProductOrdered().getName() + ", "
                     + order.getDateOrdered() + ", " + order.getQtyOrdered());
         }
-        System.out.println("\nEnd of Transactions\n");
+        System.out.println("\nEnd of listing\n");
     }
 
     /**
@@ -572,8 +573,8 @@ public class UserInterface {
      */
     public void getMembers() {
         Iterator<Result> iterator = store.getMembers();
-        System.out.println(
-                "List of members (Member Name, address, phone, date joined, fee paid, Member Id)");
+        System.out.println("List of members\n"
+                + "(Member Name, address, phone, date joined, fee paid, Member Id)");
         while (iterator.hasNext()) {
             Result result = iterator.next();
             System.out.println(result.getMemberName() + " "
@@ -591,8 +592,8 @@ public class UserInterface {
      */
     public void getProduct() {
         Iterator<Result> iterator = store.getProduct();
-        System.out.println(
-                "List of product (Product Name, Stock on Hand, Current Price, Reorder Level, Product Id)");
+        System.out.println("List of products\n"
+                + " (Product Name, Stock on Hand, Current Price, Reorder Level, Product Id)");
         while (iterator.hasNext()) {
             Result result = iterator.next();
             System.out.println(result.getProductName() + " "

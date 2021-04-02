@@ -404,12 +404,14 @@ public class Store implements Serializable {
             return result;
         }
         String ordersPlaced = "";
-        Transaction transaction = request.getCurrentTransaction();
-        Iterator<LineItem> lineItems = transaction.getLineItems();
+        Iterator<LineItem> lineItems = request.getCurrentTransaction()
+                .getLineItems();
         while (lineItems.hasNext()) {
-            ordersPlaced = adjustInventory(lineItems.next(), ordersPlaced);
+            adjustInventory(lineItems.next(), ordersPlaced);
+
         }
         result.setResultCode(Result.OPERATION_COMPLETED);
+        result.setMemberFields(member);
         result.setTransactionResult(ordersPlaced);
         return result;
     }
@@ -424,7 +426,9 @@ public class Store implements Serializable {
     private String adjustInventory(LineItem lineItem, String ordersPlaced) {
         Product product = lineItem.getProduct();
         int newStock = product.getStockOnHand() - lineItem.getPurchaseAmount();
+        Order existingOrder = orders.search(product.getId());
         if (newStock <= product.getReorderLevel()) {
+            System.out.println("Order placed for " + product.getName());
             int reorderAmount = product.getReorderLevel() * 2;
             Order reorder = new Order(product, reorderAmount);
             orders.insertOrder(reorder);
