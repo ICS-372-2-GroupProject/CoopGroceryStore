@@ -149,7 +149,6 @@ public class AutomatedTester {
     public void testProcessShipment() {
         Request.instance().setOrderId("O1");
         Request.instance().setProductStockOnHand(stockOnHand[0]);
-        assert Request.instance().getProductStockOnHand() == 10;
         Result result = Store.instance().processShipment(Request.instance());
         // Assertion will be 10.
         System.out.println(Request.instance().getProductStockOnHand());

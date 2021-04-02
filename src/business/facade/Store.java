@@ -426,9 +426,10 @@ public class Store implements Serializable {
     private String adjustInventory(LineItem lineItem, String ordersPlaced) {
         Product product = lineItem.getProduct();
         int newStock = product.getStockOnHand() - lineItem.getPurchaseAmount();
+        System.out.println("Adjusting for " + product.getName());
         product.setStockOnHand(newStock);
         Order existingOrder = orders.search(product.getId());
-        System.out.println("Adjusting for " + product.getName());
+        System.out.println("Searching for " + existingOrder);
         if (newStock <= product.getReorderLevel()
                 && (existingOrder == null || !existingOrder.isOutstanding())) {
             System.out.println("Order placed for " + product.getName());
