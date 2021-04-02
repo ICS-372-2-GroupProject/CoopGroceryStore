@@ -109,13 +109,27 @@ public class AutomatedTester {
 		assert result.getResultCode() == Result.OPERATION_COMPLETED;
 	}
 
+	/**
+	 * Automated test method to test the processShipment functionality. This test
+	 * will process order #O1. It first shows that the initial inventory of the
+	 * product received is 10 units. The test then runs processShipment() and shows
+	 * that the OPERATION_COMPLETE code is received. It then shows that the
+	 * Product's stock on hand has been increased to 20 units. (Reorder level for
+	 * this product is 5, so a new order will always be 10 units.) Finally, the test
+	 * runs with order #O200, which does not exist, to show that the NO_ORDER_FOUND
+	 * code is received.
+	 * 
+	 * @author Marc Wedo
+	 */
 	public void testProcessShipment() {
 		Request.instance().setOrderId("O1");
+		Request.instance().setProductStockOnHand(stockOnHand[0]);
+		assert Request.instance().getProductStockOnHand() == 10;
 		Result result = Store.instance().processShipment(Request.instance());
 		assert result.getResultCode() == Result.OPERATION_COMPLETED;
-		Request.instance().setOrderId("O20");
-		result = Store.instance().processShipment(Request.instance());
-		assert result.getResultCode() == Result.OPERATION_COMPLETED;
+		Request.instance().setProductStockOnHand(stockOnHand[0]);
+		assert result.getProductStockOnHand() == 20;
+
 		Request.instance().setOrderId("O200");
 		result = Store.instance().processShipment(Request.instance());
 		assert result.getResultCode() == Result.NO_ORDER_FOUND;
