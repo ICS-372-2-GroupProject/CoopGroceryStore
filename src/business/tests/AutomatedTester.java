@@ -137,6 +137,23 @@ public class AutomatedTester {
 		assert result.getResultCode() == Result.NO_ORDER_FOUND;
 	}
 
+	/**
+	 * Test changePrice
+	 */
+	public void testChangePrice() {
+		Request.instance().setProductId("P25");
+		Request.instance().setProductPrice("5.00");
+		assert Request.instance().getProductPrice().equals("5.00");
+		Request.instance().setProductPrice("6.00");
+		assert Request.instance().getProductPrice().equals("6.00");
+		Result result = Store.instance().changePrice(Request.instance());
+		assert result.getResultCode() == Result.OPERATION_COMPLETED;
+
+		Request.instance().setProductId("P50");
+		result = Store.instance().changePrice(Request.instance());
+		assert result.getResultCode() == Result.PRODUCT_NOT_FOUND;
+	}
+
 	public void testGetTransactions() {
 		Calendar beginDate = Calendar.getInstance();
 		beginDate.set(2012, Calendar.JULY, 1, 0, 0, 0);
@@ -166,6 +183,7 @@ public class AutomatedTester {
 		testCheckOutItems();
 		// testSearchMembership();
 		testProcessShipment();
+		testChangePrice();
 		testGetTransactions();
 	}
 
