@@ -323,11 +323,11 @@ public class Store implements Serializable {
     }
 
     /**
-     * Modified from instructional code.
+     * Changes price of Product object.
      * 
-     * @author G.D. Ponsness
-     * @param request
-     * @return
+     * @author G.D.Ponsness (Modified from instructional code).
+     * @param request information from the user
+     * @return result with Product information
      */
     public Result changePrice(Request request) {
         Result result = new Result();
@@ -343,8 +343,9 @@ public class Store implements Serializable {
     }
 
     /**
-     * for initialize new instance of Transaction class.
+     * Initialize new instance of Transaction class.
      * 
+     * @author G.D.Ponsness
      * @param request
      * @return result
      */
@@ -356,10 +357,11 @@ public class Store implements Serializable {
     }
 
     /**
-     * for handle check out item of a member.
+     * Passes product and amount to Transaction class
      * 
-     * @param request
-     * @return result
+     * @author G.D.Ponsness
+     * @param request information from the user
+     * @return result with Product information
      */
     public Result checkOutItem(Request request) {
         Result result = new Result();
@@ -376,10 +378,11 @@ public class Store implements Serializable {
     }
 
     /**
-     * for display Purchases a transaction result to the member by ID.
+     * Display all LineItems stored in Transaction.
      * 
-     * @param request
-     * @return Result
+     * @author G.D.Ponsness
+     * @param request information from the user
+     * @return result with String of LineItem information
      */
     public Result displayPurchases(Request request) {
         Result result = new Result();
@@ -390,10 +393,11 @@ public class Store implements Serializable {
     }
 
     /**
-     * to finalize Transaction
+     * Saves Transaction to member Object and initiates Inventory adjustment.
      * 
-     * @param request
-     * @return Result
+     * @author G.D.Ponsness
+     * @param request information from the user
+     * @return result with Member information and String with Orders placed
      */
     public Result finalizeTransaction(Request request) {
         Result result = new Result();
@@ -417,11 +421,11 @@ public class Store implements Serializable {
     }
 
     /**
-     * to adjust Inventory
+     * Adjusts Inventory and places Orders if needed
      * 
-     * @param lineItem     - LineItem
-     * @param ordersPlaced - String
-     * @return ordersPlaced - String
+     * @author G.D.Ponsness
+     * @param lineItem of Product to be adjusted
+     * @return ordersPlaced - String that details if order was placed
      */
     private String adjustInventory(LineItem lineItem) {
         String orderPlaced = "";
