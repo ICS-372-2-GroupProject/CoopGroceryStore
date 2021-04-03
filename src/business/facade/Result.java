@@ -11,14 +11,15 @@ package business.facade;
  * @author Brahma Dathan
  */
 public class Result extends DataTransfer {
-    public static final int PRODUCT_NOT_FOUND = 1;
-    public static final int ORDER_PLACED = 2;
-    public static final int NO_ORDER_FOUND = 3;
-    public static final int OPERATION_COMPLETED = 4;
-    public static final int OPERATION_FAILED = 5;
-    public static final int NO_SUCH_MEMBER = 6;
-    public static final int PRODUCT_EXISTS = 7;
-    public static final int NAME_IN_USE = 8;
+
+    public static final int OPERATION_COMPLETED = 1;
+    public static final int OPERATION_FAILED = 2;
+    public static final int NO_SUCH_MEMBER = 3;
+    public static final int PRODUCT_NOT_FOUND = 4;
+    public static final int PRODUCT_EXISTS = 5;
+    public static final int NAME_IN_USE = 6;
+    public static final int NO_ORDER_FOUND = 7;
+    public static final int ORDER_PLACED = 8;
 
     private int resultCode;
 
