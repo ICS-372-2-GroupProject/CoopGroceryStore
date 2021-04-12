@@ -1,5 +1,8 @@
 package business.tests;
 
+import java.util.Calendar;
+import java.util.Iterator;
+
 import business.entities.Member;
 import business.entities.Product;
 import business.facade.Request;
@@ -162,6 +165,34 @@ public class AutomatedTester {
 		Request.instance().setProductId("P50");
 		result = Store.instance().changePrice(Request.instance());
 		assert result.getResultCode() == Result.PRODUCT_NOT_FOUND;
+	}
+
+	/**
+	 * Automated test method to test the getTransactions functionality.
+	 * 
+	 * @author Nalongsone Danddank
+	 */
+	public void testGetTransactions() {
+		Calendar beginDate = Calendar.getInstance();
+		beginDate.set(2012, Calendar.JULY, 1, 0, 0, 0);
+		Calendar endDate = Calendar.getInstance();
+		Request.instance().setMemberId("M1");
+		Request.instance().setBeginDate(beginDate);
+		Request.instance().setEndDate(endDate);
+		Iterator<Result> results = Store.instance().getTransactions(Request.instance());
+		while (results.hasNext()) {
+			Result result = (Result) results.next();
+			assert result.getResultCode() == Result.OPERATION_COMPLETED;
+		}
+
+		endDate.set(2013, Calendar.JULY, 1, 0, 0, 0);
+		Request.instance().setEndDate(endDate);
+		results = Store.instance().getTransactions(Request.instance());
+		assert results.hasNext() == false;
+
+		Request.instance().setMemberId("NN1");
+		results = Store.instance().getTransactions(Request.instance());
+		assert results.hasNext() == false;
 	}
 
 	public void testAll() {
